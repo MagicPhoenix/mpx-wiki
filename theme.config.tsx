@@ -4,12 +4,12 @@ import { DocsThemeConfig } from 'nextra-theme-docs'
 const config: DocsThemeConfig = {
   logo: <span>MPX WIKI</span>,
   project: {
-    link: 'https://mpx-wiki.vercel.app/',
+    link: 'https://github.com/MagicPhoenix/mpx-wiki/',
   },
   chat: {
     link: 'https://discord.gg/3Uhq6k7YSg',
   },
-  docsRepositoryBase: 'https://github.com/MagicPhoenix/mpx-wiki',
+  docsRepositoryBase: 'https://github.com/MagicPhoenix/mpx-wiki/tree/main',
   footer: {
     text: 'MPX Wiki',
   },
