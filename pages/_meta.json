@@ -2,6 +2,8 @@
   "index": "Introduction",
   "another": "Another Page",
   "advanced": "Advanced (A Folder)",
+  "VORON 2.4 CBT KIT": "VORON 2.4 CBT KIT",
+  "VORON TRIDENT CBT KIT": "VORON TRIDENT CBT KIT",
   "about": {
     "title": "About",
     "type": "page"
