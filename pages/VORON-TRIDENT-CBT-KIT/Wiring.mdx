@@ -1,21 +1,30 @@
+import { Callout } from 'nextra/components'
+
 ## Before Start
 
-Make sure your LRS-200-24 110V/230V Switch is right.
+<Callout type="info">
+  Make sure your LRS-200-24 110V/230V Switch is right.
+</Callout>
 
+<Callout type="info">
 
-> Important:
->
-> Strontly recommened to flash M8P/SB2209 before installed them, check https://mpx.wiki/flash-m8p-and-ebb-sb-toolboard
->
-> This usually saves you 2 hours or even more time.
+Important:
+
+Strontly recommened to flash M8P/SB2209 before installed them, check https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v1-ebb or https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v2-ebb  (Depending on your M8P version)
+
+This usually saves you 2 hours or even more time.
+
+</Callout>
 
 
 
 ### Bigtreetech SPI35 Touch Screen
 
-> Stronly recommened to install the FPC cable on M8P side before installed to DIN rails.
+<Callout type="info">
 
+Stronly recommened to install the FPC cable on M8P side before installed to DIN rails.
 
+</Callout>
 
 uncomment this line from BoardEnv.txt, this file is in CB1 TF card /boot
 
@@ -27,11 +36,15 @@ uncomment this line from BoardEnv.txt, this file is in CB1 TF card /boot
 
 Use 3M 5952 Tape to mount PVC trunkings. 
 
-> Recommended to clean the area to be bonded with alcohol or IPA (Isopropyl Alcohol). 
->
-> Our PSU mounting is different from the official one. Please refer to the Print Guide for instructions.
->
-> Notice the SSR direction. 
+<Callout type="info">
+
+Recommended to clean the area to be bonded with alcohol or IPA (Isopropyl Alcohol). 
+
+Our PSU mounting is different from the official one. Please refer to the Print Guide for instructions
+
+Notice the SSR direction. 
+
+</Callout>
 
 Strongly recommened to install the display FPC cable before mount M8P. 
 
@@ -91,11 +104,15 @@ Note: you need to remove the outer sheath of SB2209 cable for some length on ele
 
 ### Toolboard 24V 
 
-> Note:
->
-> The default wires are tinned, solder cold flows/creeps under the load and can become a fire-hazard.
->
-> You can crimp it with a pin terminal or cut the off, use bare wire instead. 
+<Callout type="warning">
+
+Note:
+
+The default wires are tinned, solder cold flows/creeps under the load and can become a fire-hazard.
+
+You can crimp it with a pin terminal or cut the off, use bare wire instead. 
+
+</Callout>
 
 
 
