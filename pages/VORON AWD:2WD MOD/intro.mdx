@@ -1,0 +1,106 @@
+### Origin
+
+It's a modified version of aTinyShellScript's [v2.4_AWD](https://github.com/aTinyShellScript/v2.4_AWD) mod, we make it more suitable for CNC machining, add extra support bearings for steppers and XY Joint.
+
+Thanks to aTinyShellScript's mod, we can't bring it to reality without his mod.
+
+
+
+### Discord
+
+We have a channel for this, you can this link
+
+[https://discord.gg/r5YvA7tpaZ](https://discord.gg/r5YvA7tpaZ)
+
+
+
+### What's AWD/2WD?
+
+They are abbreviations for All Wheel Drive and 2-Wheel Drive.
+
+2WD is two steppers drive just like a standard corexy motion system.
+
+AWD converts the front idlers to two extra steppers drives.
+
+You can see the difference by this pic. 
+
+![image-20231029220818098](https://img.mpx.wiki/i/2023/10/29/653e676d9e584.webp)
+
+
+
+### Is the 2WD same as stock VORON gantry? 
+
+Nope, the AB drivers is different, now tensioners are on the AB drivers, and belt route on AB drivers also changed.
+
+
+
+### Why 9mm AB belt？
+
+* Enhanced rigidity of the entire XY motion system.
+* 300% Recommened accel of IS result.
+* Longer life than 6mm. 
+
+
+
+### Why Extra support bearing on stepper shafts?
+
+The tension of the 9mm belt is much greater than 6mm, as the datasheet stock stepper shaft can't handle it, it may bent the shaft   or damage the stepper bearing under correct belt tension. So we specified 38mm shaft stepper for the support bearing.
+
+![image-20231029222623169](https://img.mpx.wiki/i/2023/10/29/653e6b9289e92.webp)
+
+
+
+### Will it be super expensive ? 
+
+No.
+
+We are not doing gucci things,  instead we want to bring it to everyone. 
+
+The 2WD cost is very similar to 6mm, CNC parts are machined in our workshop so we can sell it on a accepable price. 
+
+
+### Will I lose some build volume? 
+
+Yes, you will lose around 50mm on Y axis.
+
+If you use custom bed shape, then you would only loose two corners. Around 50x50mm per coner. 
+
+### What toolhead carrier I should use? 
+
+There are some printed 9mm carrier in community, but make sure to print with more infill (recommened 50%+) as the high tension of belts.
+
+
+#### CNC Quick Change Carrier
+
+It has two parts, belt clamp and toolhead mount, so you can remove the whole toolhead by 3 screws.
+
+Can work with most probes like klicky, beacon, Bltouch. (But yes, you need to design the mount yourself)
+
+The belt clamp also has four threaded holes same as MGN9H by Z offset, so you can install other carrier directly.
+
+![image-20231029223829165](https://img.mpx.wiki/i/2023/10/29/653e6e696fc79.webp)
+
+
+
+### Can I get the CAD files?  
+
+Yes we will release it once we have finished organizing it.
+
+Before that you can ask for the specific size. 
+
+As a typical value, the distance between AB belts is 5mm. 
+
+
+
+
+
+### Is there a Trident version? 
+
+Yes, expected the end of Nov. 
+
+In trident version the front steppers are flipped. 
+
+
+
+
+

@@ -1,0 +1,40 @@
+### Target
+
+FYI input shaper result:
+
+![image-20231209234651954](https://img.mpx.wiki/i/2023/12/09/65748bf0d7243.webp)
+
+You should be able to get around 110 Hz on X axis and 75 Hz on Y axis.
+
+
+
+### Mechanical
+
+#### Screws
+
+Make sure all screws is tighen.
+
+#### Pulley grub screws (AWD Only)
+
+Recommened to tighten the rear pulleys' grub screws, they should align to the flat of stepper shaft.
+
+Then move the toolhead by hand a few times at full travel. after that you can tighten the front pulleys.
+
+Notice the front pulleys' grub screws shound't align to the flat shaft. 
+
+
+
+### Belt 
+
+![](https://img.mpx.wiki/i/2023/12/09/65748e36e2e6b.webp)
+
+![image-20231209235807888](https://img.mpx.wiki/i/2023/12/09/65748e97a6616.webp)
+
+### Belt Tension 
+
+You should get 160-180Hz/150mm, A/B belts must have same tension.
+
+When adjust it, you have to loose the 4 screws for per rear stepper.
+
+After adjust done, remember to tighten them.
+
