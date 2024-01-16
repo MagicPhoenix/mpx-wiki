@@ -11,15 +11,17 @@
     "title": "Mods"
   },
   "VORON-AWD-2WD-MOD": "VORON AWD/2WD Mod",
-  "-- Mods": {
-    "type": "separator",
-    "title": "Mods"
-  },
+
   "-- General": {
     "type": "separator",
     "title": "General"
   },
-  "General": "General",
+  "Firmware-Flash": "Firmware Flash",
+  "Troubleshooting": "Troubleshooting",
+  "Firmware-Setting": "Firmware-Setting",
+  "Tuning": "Tuning",
+  "Maintenance": "Maintenance",
+
   "-- Archive": {
     "type": "separator",
     "title": "Archive"
