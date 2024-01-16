@@ -1,0 +1,60 @@
+## Summary
+This is divided into two parts: the Y endstop on the A driver and the EBB SB on the toolhead.
+
+Our kit comes with a 1mm stainless steel wire that can prevent the umbilical cord from sagging.
+
+There is also an additional cable sleeve that you can use if you like.
+
+For umbilical we use the cable provided by EBB SB, you need to cut it too a proper length while you complete it. 
+
+### Steel wire length
+
+Recommened to mount it at Y endstop at first, then leave a proper length to the toolhead and cut it.
+
+The max length is when toolhead at front left. 
+
+
+
+## Step by Step
+Before you start, you need to cut the JST connector of EBB SB2209 cable, as it's too big to go through M12 Cable Gland, with the Canbridge cable in our kit, you don't need to re-crimp it.
+
+1. Plugin the cable connector to toolhead side, and install the steel wire to CW2 Cable Bridge (if you don't know what it is, scroll down, there's a pic)
+
+2. Slide the wire sleeve onto the EBB SB Cable, use ziptie or heat shrink tubie to fix it. (optional), just for good-looking.
+
+3. Go through the M12 cable gland, install the steel wire to Y endstop station, leave a proper length then cut extra steel wire.
+
+4. Go through Z chain and come in electronic bay,  there would have 4 wires:
+
+   Red : White UK2.5 terminal (24V+)
+
+   Black : Black UK2.5 terminal (24V+)
+
+   Yellow : Can_H on Canbridge cable
+
+   Green : Can_L on Canbridge cable
+
+   Follow this: https://mpx.wiki/cbt-wiring-guide#toolboard-24v-wire
+
+
+## A Driver
+
+![img](https://img.mpx.wiki/i/2023/12/03/656b78cae9471.webp)
+
+![img](https://img.mpx.wiki/i/2023/12/03/656b78cae6433.webp)
+
+![img](https://img.mpx.wiki/i/2023/12/03/656b78c96e866.webp)
+
+Use M3x6 BHCS to mount Y endstop PCB.
+
+![img](https://img.mpx.wiki/i/2023/12/03/656b78cb74339.webp)
+
+Then use M3x8 SHCS to install it to A driver.
+
+## Toolhead
+
+![img](https://img.mpx.wiki/i/2023/12/03/656b78cbe7743.webp)
+
+you can use zip ties instead of printed cable clip.
+
+For more detail, you can check [Bigtreetech EBB SB](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Build%20Guide/EBB%20SB2240%202209%20CAN%20v1.0%20Build%20Guide.pdf) user guide

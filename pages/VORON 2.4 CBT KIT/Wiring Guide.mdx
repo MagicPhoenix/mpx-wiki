@@ -1,0 +1,157 @@
+CBT Wiring Guide
+
+## Before Start
+
+Make sure your LRS-200-24 110V/230V Switch is right.
+
+> Important:
+>
+> Strontly recommened to flash M8P/SB2209 before installed them, check https://mpx.wiki/flash-m8p-and-ebb-sb-toolboard
+>
+> This usually saves you 2 hours or even more time.
+
+
+
+Z Chain:
+
+300mm = 25 links, 350mm = 28 links.
+
+You may have to remove a few links according to your build.
+
+##  Layout
+
+Use 3M 5952 Tape to mount PVC trunkings. 
+
+
+
+> Recommended to clean the area to be bonded with alcohol or IPA (Isopropyl Alcohol). 
+>
+> Our PSU mounting is different from the official one. Please refer to the Print Guide for instructions
+>
+> Notice the SSR direction. 
+
+
+
+
+![image-20230401013019814](https://img.mpx.wiki/i/2023/12/30/658f10f939afc.webp)
+
+## AC Wiring
+
+
+
+![](https://img.mpx.wiki/i/2023/12/30/658f10fe3a758.webp)
+
+
+
+## DC Wiring
+
+![image-20230401020907457](https://img.mpx.wiki/i/2023/12/30/658f110a7c498.webp)
+
+## Complete
+
+![image-20230401020944846](https://img.mpx.wiki/i/2023/12/30/658f110da2b66.webp)
+
+## Manta M8P Wiring
+
+### Jumpers Setting
+
+![image-20230815235820662](https://img.mpx.wiki/i/2023/12/30/658f11103e1f9.webp)
+
+
+
+### Color Wiring
+
+![image-20230401021429478](https://img.mpx.wiki/i/2023/12/30/658f111000f71.webp)
+
+![image-20230401021917997](https://img.mpx.wiki/i/2023/12/30/658f111331c37.webp)
+
+
+
+### M8P V2 with Mini12864 V2
+
+![Image](https://img.mpx.wiki/i/2023/12/30/658f120b4af2b.webp)
+
+## Bed Heater Wiring
+
+![image-20230401045820025](https://img.mpx.wiki/i/2023/12/30/658f11179c190.webp)
+
+## Toolboard 24V wire 
+
+> Note:
+>
+> The default wires are tinned, solder cold flows/creeps under the load and can become a fire-hazard.
+>
+> You can crimp it with a pin terminal or cut the off, use bare wire instead. 
+
+![image-20230401022212028](https://img.mpx.wiki/i/2023/12/30/658f1117c5818.webp)
+
+
+
+### M8P Canbridge Wire
+
+![image-20230401022310032](https://img.mpx.wiki/i/2023/12/30/658f1133b0049.webp)
+
+## Wiring Complete
+
+![image-20230401023000812](https://img.mpx.wiki/i/2023/12/30/658f11230574a.webp)
+
+## Disco Wiring
+
+> You need to use modified `Z_belt_cover` STL file. Check our print guide.
+>
+> If you are using MPX Ultra Z Belt it also works.
+
+![image-20230401024314626](https://img.mpx.wiki/i/2023/12/30/658f112aa580b.webp)
+
+
+
+> If you have M8P V2.0, you need to connect disco as daisy chain as M8P V2 only have one RGB port.
+
+
+
+![image-20231025211848032](https://img.mpx.wiki/i/2023/12/30/658f11327db8d.webp)
+
+![image-20230401024548455](https://img.mpx.wiki/i/2023/12/30/658f1138e0844.webp)
+
+![image-20230401030458219](https://img.mpx.wiki/i/2023/12/30/658f11368e49d.webp)
+
+> Use extrusion covers to hide wires. 
+>
+> They can also use for hide B stepper wires. 
+
+## Toolhead
+
+### Fan &amp; Stealthburner Leds
+
+![image-20230401031445022](https://img.mpx.wiki/i/2023/12/30/658f113b86dd6.webp)
+
+### EBB 2209 
+
+#### Jumpers
+
+![image-20230401031704743](https://img.mpx.wiki/i/2023/12/30/658f113adb6ce.webp)
+
+#### Wiring 
+
+#### X Endstop &amp; Voron Tap
+
+![image-20230401032234189](https://img.mpx.wiki/i/2023/12/30/658f113c34253.webp)
+
+#### NTC100K
+
+
+
+![image-20230401042201822](https://img.mpx.wiki/i/2023/12/30/658f114225302.webp)
+
+There's some glue on the NTC100K thermistor's connector, it may interfere with the CW2.
+In this case, you can try to remove some glue or cut a small gap there.
+
+![image-20230408005919601](https://img.mpx.wiki/i/2023/12/30/658f1143bf79a.webp)
+
+#### Optional Printed Part
+
+Bigtreetech has a modified CW2 main_body and cable_door printed part, they can make the wiring of SB2209 more presentable.
+
+[cable_door_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/cable_door_EBB_SB.stl)
+
+[main_body_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/main_body_EBB_SB.stl)
