@@ -19,7 +19,7 @@ const config: DocsThemeConfig = {
   head: (
     <>
       <link
-        rel="shortcut icon"
+        rel="icon"
         type="image/x-icon"
         href={"/favicon.ico"}
       />
