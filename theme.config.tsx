@@ -16,6 +16,25 @@ const config: DocsThemeConfig = {
   sidebar: {
     defaultMenuCollapseLevel: 1, // here
   },
+    head: function useHead() {
+    const { title } = useConfig()
+    const { route } = useRouter()
+    const socialCard =
+      route === '/' || !title
+        ? 'https://nextra.site/og.jpeg'
+        : `https://nextra.site/api/og?title=${title}`
+
+    return (
+      <>
+        <meta
+          name="og:title"
+          content={title ? title + ' – MPX Wiki' : 'MPX'}
+        />
+        <link rel="icon" href="/favicon.ico" type="image/ico" />
+      </>
+    )
+  },
+
 }
 
 export default config
