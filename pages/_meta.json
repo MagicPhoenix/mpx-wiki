@@ -9,5 +9,7 @@
   "-- Mods": {
     "type": "separator",
     "title": "Mods"
-  }
+  },
+  "VORON-AWD-2WD-MOD": "VORON AWD/2WD Mod"
+
 }
