@@ -1,4 +1,11 @@
 {
   "index": "Introduction",
-  "advanced": "Advanced (A Folder)"
+  "-- Voron Kits": {
+    "type": "separator",
+    "title": "Voron Kits"
+  },
+  "VORON-2.4-CBT-KIT": "2.4 CBT Kit",
+  "VORON-Trident-CBT-KIT": "Trident CBT Kit",
+
+
 }
