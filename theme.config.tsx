@@ -28,8 +28,8 @@ const config: DocsThemeConfig = {
   useNextSeoProps() {
     return {
       titleTemplate: '%s – MPX Wiki'
-    }
-  }
+    },
+  };
 }
 
 export default config
