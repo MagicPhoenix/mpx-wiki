@@ -1,0 +1,393 @@
+
+
+# CBT Kit M8P+CB1 Start Guide
+
+
+
+
+
+## Preparing
+
+You need to prepare a USB Type-C cable and have 5V output.
+
+(Recommened USB-Type B to Type C, some PD charger may ouput over 5V via C2C cable, it may burn your M8P)
+
+
+Strongly recommened to use a USB Wall Charger, some PC USB ports don't have enough power and will cause random issues. 
+
+
+### Wiring
+
+Strongly recommened flash them before installed, wire like this 
+
+![image-20230319031735759](https://img.mpx.wiki/i/2023/03/19/64160e52492e4.webp)
+
+Jumpers: V_USB on M8P, USB_5V on EBB SB, 120R on EBB SB
+
+![image-20230327115156735](https://img.mpx.wiki/i/2023/03/27/642112e07a5be.webp)
+
+
+![image-20230327115407076](https://img.mpx.wiki/i/2023/03/27/6421136211267.webp)
+
+
+
+This pic is made by @Westy_Pity_Da_Fool, it maybe helpful to understand it, notice you need to plug USB cable to EBB SB2209.
+
+![Image](https://img.mpx.wiki/i/2023/08/22/64e4a315902c0.webp)
+
+Wries: 
+
+USB Cable from EBB SB to M8P
+
+Canbus Cable from EBB SB to M8P (canbus 2P connector only)
+
+M8P USB Power Cable
+
+Do not connect the red and black wires, leave them dangling and make sure they do not touch or short circuit each other
+
+### Flash CB1
+
+Download the latest image name start with `CB1_Debian11_Klipper` from github, https://github.com/bigtreetech/CB1/releases 
+
+Then use `balenaEtcher ` flash it into your TF card, you don't need to unzip the image. 
+
+While flash done,  replug the TF card, there have a BOOT partition shown on your PC.
+
+Edit `system.cfg` and change WIFI setting to yours.
+
+![image-20230319215101298](https://img.mpx.wiki/i/2023/03/19/6417134728f27.webp)
+
+![image-20230319215221809](https://img.mpx.wiki/i/2023/03/19/6417139804c92.webp)
+
+That's all, now just install the TF card to M8P and install CB1 to M8P. 
+
+Note: the TF card must install to `SOC-CARD`, not `MCU-CARD`
+
+![image-20230327115012657](https://img.mpx.wiki/i/2023/03/27/6421127c71b33.webp)
+
+Now power on and wait a few minutes, you should be able to see the CB1 IP address in your router. 
+
+ ![image-20230319220132540](https://img.mpx.wiki/i/2023/03/19/641715bf451ad.webp)
+
+Use your brower visit the IP address, mailsail should work.
+
+
+
+### [Optional]Update
+
+Recommened :
+
+Update klipper to latest before start 
+![image-20230319014058625](https://img.mpx.wiki/i/2023/03/19/6415f7ac70442.webp)
+
+
+
+### Set CB1 Can Bridge Bitrate
+
+```
+sudo nano /etc/network/interfaces.d/can0
+```
+Change bitrate to 1000000
+```
+allow-hotplug can0
+iface can0 can static
+    bitrate 1000000
+    up ifconfig $IFACE txqueuelen 1024
+```
+
+Reboot CB1 by `reboot`
+
+
+
+
+
+
+
+## Flash M8P 
+
+```shell
+cd ~/klipper
+make menuconfig
+```
+
+Then set it as this pic
+
+```
+[*] Enable extra low-level configuration options
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32G0B1)  --->
+    Bootloader offset (8KiB bootloader)  --->
+    Clock Reference (8 MHz crystal)  --->
+    Communication interface (USB to CAN bus bridge (USB on PA11/PA12))  --->
+    CAN bus interface (CAN bus (on PD12/PD13))  --->
+    USB ids  --->
+(1000000) CAN bus speed
+()  GPIO pins to set at micro-controller startup
+```
+
+
+
+![image-20230319014546632](https://img.mpx.wiki/i/2023/03/19/6415f8cc73d94.webp)
+
+Press Q and save it
+
+```shell
+make
+```
+
+It would create klipper firmware file `out/klipper.bin`
+
+Flash it with DFU 
+
+Press on BOOT0 and click RESET button 
+
+![image-20230319015740528](https://img.mpx.wiki/i/2023/04/06/642e8327b968b.webp)
+
+```
+lsusb
+```
+
+![image-20230319015826219](https://img.mpx.wiki/i/2023/04/29/644c499b9642d.webp)
+
+There would be a DFU Mode device found, remember its ID, but normally it's `0483:df11`
+
+```
+make flash FLASH_DEVICE=0483:df11
+```
+
+```shell
+biqu@BTT-CB1:~/klipper$ make flash FLASH_DEVICE=0483:df11
+  Flashing out/klipper.bin to 0483:df11
+sudo dfu-util -d ,0483:df11 -R -a 0 -s 0x8002000:leave -D out/klipper.bin
+
+dfu-util 0.9
+
+Copyright 2005-2009 Weston Schmidt, Harald Welte and OpenMoko Inc.
+Copyright 2010-2016 Tormod Volden and Stefan Schmidt
+This program is Free Software and has ABSOLUTELY NO WARRANTY
+Please report bugs to http://sourceforge.net/p/dfu-util/tickets/
+
+dfu-util: Invalid DFU suffix signature
+dfu-util: A valid DFU suffix will be required in a future dfu-util release!!!
+Opening DFU capable USB device...
+ID 0483:df11
+Run-time device DFU version 011a
+Claiming USB DFU Interface...
+Setting Alternate Setting #0 ...
+Determining device status: state = dfuIDLE, status = 0
+dfuIDLE, continuing
+DFU mode device DFU version 011a
+Device returned transfer size 1024
+DfuSe interface name: "Internal Flash   "
+Downloading to address = 0x08002000, size = 28732
+Download	[=========================] 100%        28732 bytes
+Download done.
+File downloaded successfully
+dfu-util: Error during download get_status
+
+Failed to flash to 0483:df11: Error running dfu-util
+
+If the device is already in bootloader mode it can be flashed with the
+following command:
+  make flash FLASH_DEVICE=0483:df11
+  OR
+  make flash FLASH_DEVICE=1209:beba
+
+If attempting to flash via 3.3V serial, then use:
+  make serialflash FLASH_DEVICE=0483:df11
+
+make: *** [src/stm32/Makefile:100: flash] Error 255
+```
+
+if it shows like this, then you have flashed it successfully, 
+
+now click RST button to restart M8P (it won't restart CB1)
+
+Check M8P Can uuid:
+
+```
+python3 lib/canboot/flash_can.py -q
+```
+
+```shell
+biqu@BTT-CB1:~/klipper$ python3 lib/canboot/flash_can.py -q
+Resetting all bootloader node IDs...
+Checking for canboot nodes...
+Detected UUID: 4b94c57be78e, Application: Klipper
+Query Complete
+```
+
+remember your M8P can uuid `4b94c57be78e` (yours should be different)
+
+
+
+## Flash EBB SB2209
+
+Plug the USB-5V jumper and connect it to M8P via USB cable. 
+
+```
+cd ~
+git clone https://github.com/Arksine/CanBoot
+cd CanBoot
+make menuconfig
+```
+
+```
+(Top) 
+                        CanBoot Configuration v0.0.1-41-gffd8ac6
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32G0B1)  --->
+    Build CanBoot deployment application (Do not build)  --->
+    Clock Reference (8 MHz crystal)  --->
+    Communication interface (CAN bus (on PB0/PB1))  --->
+    Application start offset (8KiB offset)  --->
+(1000000) CAN bus speed
+()  GPIO pins to set on bootloader entry
+[*] Support bootloader entry on rapid double click of reset button
+[ ] Enable bootloader entry on button (or gpio) state
+[*] Enable Status LED       
+(PA13)  Status LED GPIO Pin
+```
+
+
+
+
+
+![image-20230319022136925](https://img.mpx.wiki/i/2023/03/19/64160132e00e8.webp)
+
+press Q and save it then run `make`
+
+Hold on BOOT button and press RST click on EBB SB
+
+`lsusb`
+
+![image-20230319022359143](https://img.mpx.wiki/i/2023/03/19/641601c0bbce3.webp)
+
+There would be another DFU device `0483:df11`
+
+Flash it
+
+```shell
+dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000 -D ~/CanBoot/out/canboot.bin
+```
+
+```shell
+biqu@BTT-CB1:~/CanBoot$ dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000 -D ~/CanBoot/out/canboot.bin
+dfu-util 0.9
+
+Copyright 2005-2009 Weston Schmidt, Harald Welte and OpenMoko Inc.
+Copyright 2010-2016 Tormod Volden and Stefan Schmidt
+This program is Free Software and has ABSOLUTELY NO WARRANTY
+Please report bugs to http://sourceforge.net/p/dfu-util/tickets/
+
+dfu-util: Invalid DFU suffix signature
+dfu-util: A valid DFU suffix will be required in a future dfu-util release!!!
+Opening DFU capable USB device...
+ID 0483:df11
+Run-time device DFU version 011a
+Claiming USB DFU Interface...
+Setting Alternate Setting #0 ...
+Determining device status: state = dfuIDLE, status = 0
+dfuIDLE, continuing
+DFU mode device DFU version 011a
+Device returned transfer size 1024
+DfuSe interface name: "Internal Flash   "
+Downloading to address = 0x08000000, size = 4468
+Download	[=========================] 100%         4468 bytes
+Download done.
+File downloaded successfully
+```
+
+
+
+## Flash Klipper by USB 
+
+```
+cd ~/klipper
+make menuconfig
+```
+
+```
+(Top) 
+                             Klipper Firmware Configuration
+[*] Enable extra low-level configuration options
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32G0B1)  --->
+    Bootloader offset (8KiB bootloader)  --->
+    Clock Reference (8 MHz crystal)  --->
+    Communication interface (CAN bus (on PB0/PB1))  --->
+(1000000) CAN bus speed
+()  GPIO pins to set at micro-controller startup
+```
+
+![image-20230319023921521](https://img.mpx.wiki/i/2023/03/19/6416055b8f5b1.webp)
+
+press Q and save it, then run `make`
+
+Set EBB SB2209 to DFU mode
+
+Hold and press RST to DFU mode, run lsusb 
+
+![image-20230319024157881](https://img.mpx.wiki/i/2023/03/19/641605f7a7250.webp)
+Flash it
+
+```
+dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08002000 -D out/klipper.bin
+```
+
+
+
+### Check
+
+1.Canboot Check 
+
+Double click RST button, the red LED should blink.
+
+```
+cd ~/klipper
+python3 lib/canboot/flash_can.py -q
+```
+
+If it shows like this, then Canboot has flashed successfully.
+
+```
+biqu@BTT-CB1:~/klipper$ python3 lib/canboot/flash_can.py -q
+Resetting all bootloader node IDs...
+Checking for canboot nodes...
+Detected UUID: 4b94c57be78e, Application: Klipper
+Detected UUID: 2f0b1ce14660, Application: CanBoot
+Query Complete
+```
+
+2.Klipper Check
+
+click RST Button, LED shouldn't blink anymore 
+
+```
+python3 lib/canboot/flash_can.py -q
+```
+
+if it shows like this, klipper has flashed successfully
+
+```shell
+biqu@BTT-CB1:~/klipper$ python3 lib/canboot/flash_can.py -q
+Resetting all bootloader node IDs...
+Checking for canboot nodes...
+Detected UUID: 4b94c57be78e, Application: Klipper
+Detected UUID: 2f0b1ce14660, Application: Klipper
+Query Complete
+```
+
+
+
+![image-20230319031104014](https://img.mpx.wiki/i/2023/03/19/64160cc9b2011.webp)
+
+
+
+All flash works done, now `4b94c57be78e` is your M8P uuid, and `2f0b1ce14660` is toolboard uuid.
+
+Use these replace `printer.cfg`
+
+Remove `v_usb` jumper on M8P and `usb_5v` jumper on EBB SB
+
+Keep 120R jumper

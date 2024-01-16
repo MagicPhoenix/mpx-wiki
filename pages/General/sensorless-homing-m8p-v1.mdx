@@ -1,0 +1,89 @@
+Sensorless Homing Setting On M8P
+
+## DIAG Jumper Setting
+
+You need to install the DIAG jumper on AB steppers like the pic shown. and unplug Y endstop cable.
+
+> Notice: you need to remove Y endstop cable, and the chamber thermistor won't work in this case, you can plug the 3P connector to any other endstop port.
+
+![image-20230822200539317](https://img.mpx.wiki/i/2023/08/22/64e4a4980c24d.webp)
+
+## Firmware Setting 
+
+This firmware is used for 300 build, you may need to change it.
+
+> This section is from @Alex, he posted it on discord.
+>
+
+```
+#####################################################################
+#     X/Y Stepper Settings
+#####################################################################
+
+## X Stepper on Motor1(B Motor)
+[stepper_x]
+step_pin: PE2
+dir_pin: !PB4
+enable_pin: !PC11
+microsteps: 64
+rotation_distance: 40
+homing_speed: 20
+homing_retract_dist: 0
+
+endstop_pin: tmc2209_stepper_x:virtual_endstop
+position_min: 0
+position_endstop: 300
+position_max: 300
+
+##--------------------------------------------------------------------
+homing_positive_dir: true
+
+[tmc2209 stepper_x]
+uart_pin: PC10
+interpolate: False
+run_current: 1.2
+sense_resistor: 0.110
+stealthchop_threshold: 0
+driver_SGTHRS: 56
+diag_pin: ^PF3 
+
+
+
+
+## Y Stepper on Motor2 (A Motor)
+[stepper_y]
+step_pin: PF12
+dir_pin: !PF11
+enable_pin: !PB3
+microsteps: 64
+
+rotation_distance: 40
+homing_speed: 20
+
+endstop_pin: tmc2209_stepper_y:virtual_endstop
+position_min: 0
+position_endstop: 300
+position_max: 300
+
+##--------------------------------------------------------------------
+homing_positive_dir: true
+
+[tmc2209 stepper_y]
+uart_pin: PF13
+interpolate: False
+run_current: 1.2
+sense_resistor: 0.110
+stealthchop_threshold: 0
+driver_SGTHRS: 56
+diag_pin: ^PF4 
+
+```
+
+## Tuning
+
+Clee has made a great manual for tuning, you can follow that 
+
+[Setting Up and Calibrating Sensorless XY Homing](https://docs.vorondesign.com/community/howto/clee/sensorless_xy_homing.html)
+
+
+

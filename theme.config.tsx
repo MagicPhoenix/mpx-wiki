@@ -13,6 +13,9 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'MPX Wiki @2020-2024',
   },
+  sidebar: {
+    defaultMenuCollapseLevel: 1, // here
+  },
 }
 
 export default config

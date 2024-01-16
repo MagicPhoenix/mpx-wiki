@@ -10,6 +10,18 @@
     "type": "separator",
     "title": "Mods"
   },
-  "VORON-AWD-2WD-MOD": "VORON AWD/2WD Mod"
-
+  "VORON-AWD-2WD-MOD": "VORON AWD/2WD Mod",
+  "-- Mods": {
+    "type": "separator",
+    "title": "Mods"
+  },
+  "-- General": {
+    "type": "separator",
+    "title": "General"
+  },
+  "General": "General",
+  "-- Archive": {
+    "type": "separator",
+    "title": "Archive"
+  }
 }
