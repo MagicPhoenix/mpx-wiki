@@ -11,7 +11,7 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: 'https://github.com/MagicPhoenix/mpx-wiki/tree/main',
   footer: {
-    text: 'MPX Wiki',
+    text: 'MPX Wiki @2020-2024',
   },
 }
 

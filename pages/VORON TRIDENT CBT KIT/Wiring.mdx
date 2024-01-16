@@ -1,0 +1,148 @@
+## Before Start
+
+Make sure your LRS-200-24 110V/230V Switch is right.
+
+
+> Important:
+>
+> Strontly recommened to flash M8P/SB2209 before installed them, check https://mpx.wiki/flash-m8p-and-ebb-sb-toolboard
+>
+> This usually saves you 2 hours or even more time.
+
+
+
+### Bigtreetech SPI35 Touch Screen
+
+> Stronly recommened to install the FPC cable on M8P side before installed to DIN rails.
+
+
+
+uncomment this line from BoardEnv.txt, this file is in CB1 TF card /boot
+
+![image-20230731155412439](https://img.mpx.wiki/i/2023/08/08/64d25f6de2d5b.webp)
+
+
+
+##  Layout
+
+Use 3M 5952 Tape to mount PVC trunkings. 
+
+> Recommended to clean the area to be bonded with alcohol or IPA (Isopropyl Alcohol). 
+>
+> Our PSU mounting is different from the official one. Please refer to the Print Guide for instructions.
+>
+> Notice the SSR direction. 
+
+Strongly recommened to install the display FPC cable before mount M8P. 
+
+The connector is on the back of M8P.
+
+![image-20230909143109123](https://img.mpx.wiki/i/2023/09/09/64fc1130d78ba.webp)
+
+
+
+![elec_layout](https://img.mpx.wiki/i/2023/07/24/64be9adeae23f.webp)
+
+
+
+
+
+## AC Wiring
+
+![AC_Wiring](https://img.mpx.wiki/i/2023/07/24/64be9c609ca4a.webp)
+
+![AC_Wiring_Done](https://img.mpx.wiki/i/2023/07/25/64bea4947b001.webp)
+
+## DC Wiring
+
+![DC_Wiring](https://img.mpx.wiki/i/2023/07/24/64be9e6504ceb.webp)
+
+
+
+
+
+## Complete
+
+![DC_Wiring_Done](https://img.mpx.wiki/i/2023/07/25/64bea53f8ad69.webp)
+
+## Manta M8P Wiring
+
+
+
+### Jumpers Setting
+
+![](https://img.mpx.wiki/i/2023/08/16/64dba1d5da992.webp)
+
+### Color Wiring
+
+![image-20230725001401380](https://img.mpx.wiki/i/2023/07/25/64bea34e03f28.webp)
+
+![image-20230725001418698](https://img.mpx.wiki/i/2023/07/25/64bea35fbed94.webp)
+
+
+
+## Bed Wiring
+
+![image-20230909145243499](https://img.mpx.wiki/i/2023/09/09/64fc164283342.webp)
+
+## Toolboard 
+
+Note: you need to remove the outer sheath of SB2209 cable for some length on electronic bay side.
+
+### Toolboard 24V 
+
+> Note:
+>
+> The default wires are tinned, solder cold flows/creeps under the load and can become a fire-hazard.
+>
+> You can crimp it with a pin terminal or cut the off, use bare wire instead. 
+
+
+
+![image-20230909145840454](https://img.mpx.wiki/i/2023/09/09/64fc17a5b3494.webp)
+
+### M8P Canbridge Wire
+
+![image-20230401022310032](https://img.mpx.wiki/i/2023/07/25/64bea3a128fda.webp)
+
+## Wiring Complete
+
+![image-20230909143926693](https://img.mpx.wiki/i/2023/09/09/64fc1323a5769.webp)
+
+## Toolhead
+
+### Fan &amp; Stealthburner Leds
+
+![image-20230401031445022](https://img.mpx.wiki/i/2023/04/01/6427312935cbb.webp)
+
+### EBB 2209 
+
+#### Jumpers
+
+![image-20230401031704743](https://img.mpx.wiki/i/2023/04/01/642731b3f0e32.webp)
+
+#### Wiring 
+
+#### X Endstop &amp; Voron Tap
+
+![image-20230401032234189](https://img.mpx.wiki/i/2023/04/01/642732fc9b45e.webp)
+
+#### NTC100K
+
+
+
+![image-20230401042201822](https://img.mpx.wiki/i/2023/04/01/642740ec153d9.webp)
+
+There's some glue on the NTC100K thermistor's connector, it may interfere with the CW2.
+In this case, you can try to remove some glue or cut a small gap there.
+
+![image-20230408005919601](https://img.mpx.wiki/i/2023/04/08/64304beb1d725.webp)
+
+#### Optional Printed Part
+
+Bigtreetech has a modified CW2 main_body and cable_door printed part, they can make the wiring of SB2209 more presentable.
+
+[cable_door_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/cable_door_EBB_SB.stl)
+
+[main_body_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/main_body_EBB_SB.stl)
+
