@@ -1,0 +1,27 @@
+## Initial Startup
+import { Callout } from 'nextra/components'
+
+<Callout type="warning">
+If you are using sensorless homing, make sure before starting that the [DIAG Jumpers have been installed](../Firmware-Setting/sensorless-homing-m8p-v1.mdx) on the Manta M8P.  That page also details the `printer.cfg` changes and additional setup work you'll need to do as well.
+</Callout>
+
+Please follow the [Initial Startup Checks](https://docs.vorondesign.com/build/startup/) provided by the Voron Design Team.  It is a step-by-step guide to safely get your new printer up and running.  It includes things like:
+- Checks for proper temperature reporting
+- Heater and endstop checks
+- Homing checks
+- Z offset adjustment
+- Extruder calibration
+- And much more!
+
+## Tuning 
+
+[Ellis' Print Tuning Guide](https://ellis3dp.com/Print-Tuning-Guide/) is a must-read for getting quality prints out of your new Voron. It is very detailed and applies to both the V2.4 and the Trident. It is strongly recommended that you follow this guide once you have your printer up and running.
+
+## Typical Information
+
+These values are for a Voron V2.4.  Values for a Trident will be similar.
+- Chamber Temperature: with a buildplate temperature of 110°C, the chamber temperature will be around 60°C.
+- Visual Fine Artifacts (VFA): Setting the outwall speed to greater than 200mm/s can effectively avoid VFA. We use 350mm/s on our own printer.
+- Input shaper result: Typical X acceleration of 10000, Y acceleration of 5000.
+
+![image-20230425231541394](https://img.mpx.wiki/i/2023/04/25/6447eea628df2.webp)
