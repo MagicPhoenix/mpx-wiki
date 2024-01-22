@@ -2,19 +2,19 @@ CBT Wiring Guide
 
 import { Callout } from 'nextra/components'
 
-## Before Start
+## Before You Start
 
 <Callout type="info">
-  Make sure your LRS-200-24 110V/230V Switch is right.
+  Make sure your LRS-200-24 110V/230V Switch is in the right orientation.
 </Callout>
 
 <Callout type="info">
 
 Important:
 
-Strontly recommened to flash M8P/SB2209 before installed them, check https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v1-ebb or https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v2-ebb  (Depending on your M8P version)
+We strongly recommend to flash M8P/SB2209 before you install them, check https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v1-ebb or https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v2-ebb  (Depending on your M8P version)
 
-This usually saves you 2 hours or even more time.
+This usually saves you 2 hours or more.
 
 </Callout>
 
@@ -26,7 +26,7 @@ Z Chain:
 
 300mm = 25 links, 350mm = 28 links.
 
-You may have to remove a few links according to your build.
+You may have to remove a few links according to your build size.
 
 ##  Layout
 
@@ -36,9 +36,9 @@ Use 3M 5952 Tape to mount PVC trunkings.
 
 <Callout type="info">
 
-Recommended to clean the area to be bonded with alcohol or IPA (Isopropyl Alcohol). 
+We recommend to clean the area to be bonded with alcohol or IPA (Isopropyl Alcohol). 
 
-Our PSU mounting is different from the official one. Please refer to the Print Guide for instructions
+Our PSU mounting is different from the official one. Please refer to the Print Guide for instructions.
 
 Notice the SSR direction. 
 
@@ -99,7 +99,7 @@ Note:
 
 The default wires are tinned, solder cold flows/creeps under the load and can become a fire-hazard.
 
-You can crimp it with a pin terminal or cut the off, use bare wire instead. 
+You can crimp it with a pin terminal or cut them off and use bare wire instead. 
 
 </Callout>
 
@@ -121,7 +121,7 @@ You can crimp it with a pin terminal or cut the off, use bare wire instead.
 
 <Callout type="info">
 
-You need to use modified `Z_belt_cover` STL file. Check our print guide.
+You need to use the modified `Z_belt_cover` STL file. Check our print guide.
 
 If you are using MPX Ultra Z Belt it also works.
 
@@ -129,9 +129,9 @@ If you are using MPX Ultra Z Belt it also works.
 
 <Callout type="info">
 
-Notice the wire label on the cable of both ends.  The cable has direction.
+Notice the wire label on the cable of both ends. The cable is directional.
 
-The side with label `DIN` is `IN` port, the cable from M8P should go in DIN side. 
+The side labeled `DIN` is the `IN` port, the cable from M8P should go in DIN side. 
 
 </Callout>
 
@@ -145,11 +145,9 @@ The side with label `DIN` is `IN` port, the cable from M8P should go in DIN side
 #### M8P V2
 <Callout type="info">
 
-If you have M8P V2.0, you need to connect disco as daisy chain as M8P V2 only have one RGB port.
+If you have the M8P V2.0, you need to connect the Disco in a daisy chain configuration, as M8P V2 only has one RGB port.
 
-The long cable still from M8P, then go to the `DIN side` of the first stick, then another cable plugged to the `DOUT side` of the first stick, another side plug to  `DIN side` of the second stick.
-
-
+The long cable still from M8P, then goes into the `DIN side` of the first stick, then another cable plugged from the `DOUT` of the first stick into the `DIN` of the second stick.
 
 </Callout>
 
@@ -166,7 +164,7 @@ The long cable still from M8P, then go to the `DIN side` of the first stick, the
 
 Use extrusion covers to hide wires. 
 
-They can also use for hide B stepper wires. 
+They can also be used to hide B stepper wires. 
 
 </Callout>
 
@@ -190,8 +188,6 @@ They can also use for hide B stepper wires.
 
 #### NTC100K
 
-
-
 ![image-20230401042201822](https://img.mpx.wiki/i/2023/12/30/658f114225302.webp)
 
 There's some glue on the NTC100K thermistor's connector, it may interfere with the CW2.
@@ -201,7 +197,7 @@ In this case, you can try to remove some glue or cut a small gap there.
 
 #### Optional Printed Part
 
-Bigtreetech has a modified CW2 main_body and cable_door printed part, they can make the wiring of SB2209 more presentable.
+BIGTREETECH has a modified CW2 main_body and cable_door printed parts, they can make the wiring of SB2209 more presentable.
 
 [cable_door_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/cable_door_EBB_SB.stl)
 
