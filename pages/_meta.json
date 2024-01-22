@@ -16,10 +16,11 @@
     "type": "separator",
     "title": "General"
   },
+  "Firmware": "Firmware",
   "Firmware-Flash": "Firmware Flash",
+  "Firmware-Setting": "Firmware Settings",
+  "Tuning": "Initial Startup & Tuning",
   "Troubleshooting": "Troubleshooting",
-  "Firmware-Setting": "Firmware-Setting",
-  "Tuning": "Tuning",
   "Maintenance": "Maintenance",
 
   "-- Archive": {
