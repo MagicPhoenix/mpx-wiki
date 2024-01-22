@@ -40,6 +40,9 @@ $ make
 
 ## Flash via Canboot
 
+<Callout type="info">
+Canboot was recently renamed to Katapult. Depending on your installation you may need to substitute katapult for CanBoot below.
+</Callout>
 
 Via SSH:
 
@@ -49,3 +52,7 @@ python3 flashtool.py -i can0 -f ~/klipper/out/klipper.bin -u <uuid>, replacing <
 ```
 Wait for the flash to finish.
 Reboot your printer.
+
+<Callout type="info">
+In the event the Klipper flash fails and the EBB becomes unresponive, it can be recovered by reflashing over USB according to the initial flashing instructions, startimg with flashing canboot. The 5v jumper on the EBB is not needed if the board is powered from the printer.
+</Callout>
