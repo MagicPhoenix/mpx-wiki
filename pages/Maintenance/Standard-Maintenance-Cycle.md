@@ -22,12 +22,12 @@
 
 ### Service life of motion parts
 
-* Belt: it should be fine after 5000hrs printing under 400mm/s @ 10K acc.
-* Pulley:  usually maintenance free.
+* Belts: it should be fine after 5000hrs printing under 400mm/s @ 10K acc.
+* Pulleys: usually maintenance free.
 * Bearings: it should be fine after 3000hrs printing under 400mm/s @ 10K acc.
 * Idlers: it should be fine after 3000hrs printing under 400mm/s @ 10K acc.
 
-There may be abnormal noises from bearings or idlers after 3000hrs printing, in this case you can try to apply a bit grease.
+There may be abnormal noises from bearings or idlers after 3000hrs printing, in this case you can try to apply a bit more grease.
 
 
 
