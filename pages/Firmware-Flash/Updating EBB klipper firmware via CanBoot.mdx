@@ -1,0 +1,58 @@
+# Updating klipper on the EBB with CanBoot
+## Requirements
+This is for use with a working printer that requires the klipper firmware on the EBB to be updated. You must have Flashed CanBoot and Klipper per the initial flashing instructions.
+
+## Updating Klipper
+
+You will need the canbus ID for your EBB, it can be found in your printer.cfg file under [mcu EBBcan], write this down, you will need it later in the process.
+
+## Make The klipper firmware
+
+
+Stop the klipper Service (This can be done from in mainsail)
+Connect to your printer via SSH
+
+```
+$ cd ~/klipper
+$ make menuconfig
+```
+
+```
+(Top) 
+                             Klipper Firmware Configuration
+[*] Enable extra low-level configuration options
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32G0B1)  --->
+    Bootloader offset (8KiB bootloader)  --->
+    Clock Reference (8 MHz crystal)  --->
+    Communication interface (CAN bus (on PB0/PB1))  --->
+(1000000) CAN bus speed
+()  GPIO pins to set at micro-controller startup
+```
+
+![image-20230319023921521](https://img.mpx.wiki/i/2023/03/19/6416055b8f5b1.webp)
+
+Press Q to save and then run `make` from the terminal:
+
+```shell
+$ make
+```
+
+## Flash via Canboot
+
+<Callout type="info">
+Canboot was recently renamed to Katapult. Depending on your installation you may need to substitute katapult for CanBoot below.
+</Callout>
+
+Via SSH:
+
+```
+cd ~/CanBoot/scripts
+python3 flashtool.py -i can0 -f ~/klipper/out/klipper.bin -u <uuid>, replacing <uuid> with the uuid for your EBB
+```
+Wait for the flash to finish.
+Reboot your printer.
+
+<Callout type="info">
+In the event the Klipper flash fails and the EBB becomes unresponive, it can be recovered by reflashing over USB according to the initial flashing instructions, startimg with flashing canboot. The 5v jumper on the EBB is not needed if the board is powered from the printer.
+</Callout>
