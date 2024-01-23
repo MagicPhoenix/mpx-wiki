@@ -18,26 +18,87 @@ The second file to download is required for the LEDs on the Stealthburner.  Down
 
 If you ordered the Disco LEDs or Rapido hotend, you also need to follow [`Configuration for Specific Hardware`](#configuration-for-specific-hardware) to make further edits to your new `printer.cfg` file.  Note that the Chaoticlab CNC tap does not require any special software configuration.
 
-<Callout type="info">
-Once you've got the basics down, you may want to look at this ["Better Print Start Macro"](https://github.com/jontek2/A-better-print_start-macro) by jontek2 on Github.
-</Callout>
 
 ## Slicer Settings
 
-Start G-code
+### print_start/print_end macros
+The print_start/print_end macros run some actions that are required before and after the actual printing. With the basic macros included in the printer.cfg, it will do the following:
+- print_start
+    - Home all axis
+    - Level the bed (QUAD_GANTRY_LEVEL for v2.4 or Z_TILT_ADJUST for Trident)
+    - Rehome the axis
+    - Park over the center of the bed
+- print_end
+    - Turns off the heaters
+    - Parks the toolhead at the back
+    - Turns off fans
 
-```
-M190 S[bed_temperature_initial_layer_single]
-M109 S150
-PRINT_START 
-M109 S[nozzle_temperature_initial_layer]
-```
+In order to trigger these macros, we need to tell our slicer to pass the commands along in the gcode. See the sections below for the location to add our custom gcode for different slicers.
 
-End G-code
+<details>
+    <summary>OrcaSlicer</summary>
+    
+    The custom gcode settings are under Printer setting > Machine G-code (You will need to enable advanced settings to see it)
 
-```
-PRINT_END
-```
+    ![Orca_Machine_G-Code2.webp](https://img.mpx.wiki/i/2024/01/23/65af007baa676.webp)
+
+    Machine start G-code
+    ```
+    M190 S[bed_temperature_initial_layer_single]
+    M109 S150
+    PRINT_START
+    M109 S[nozzle_temperature_initial_layer]
+    ```
+
+    Machine end G-code
+    ```
+    PRINT_END
+    ```
+</details>
+<details>
+    <summary>PrusaSlicer</summary>
+    
+    The custom gcode settings are under Printer Setting > Custom G-code (You will need to enable Expert settings to see it)
+
+    ![Prusa_Machine_G-Code2.webp](https://img.mpx.wiki/i/2024/01/23/65af08b16fb19.webp)
+
+    Start G-code
+    ```
+    M190 S[first_layer_bed_temperature]
+    M109 S150
+    PRINT_START
+    M109 S[first_layer_temperature[initial_extruder]]
+    ```
+
+    End G-code
+    ```
+    PRINT_END
+    ```
+</details>
+<details>
+    <summary>SuperSlicer</summary>
+    
+    The custom gcode settings are under Printer Setting > Custom G-code (You will need to enable Expert settings to see it)
+
+    ![Super_Machine_G-Code.webp](https://img.mpx.wiki/i/2024/01/23/65af07c747863.webp)
+
+    Start G-code
+    ```
+    M190 S[first_layer_bed_temperature]
+    M109 S150
+    PRINT_START
+    M109 S{first_layer_temperature[initial_extruder] + extruder_temperature_offset[initial_extruder]}
+    ```
+
+    End G-code
+    ```
+    PRINT_END
+    ```
+</details>
+
+<Callout type="info">
+Once you've got the basics down, you may want to look at this ["Better Print Start Macro"](https://github.com/jontek2/A-better-print_start-macro) by jontek2 on Github.
+</Callout>
 
 ## Configuration for Specific Hardware
 
