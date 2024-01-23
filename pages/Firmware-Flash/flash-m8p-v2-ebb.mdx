@@ -4,7 +4,7 @@ import { Callout } from 'nextra/components'
 
 There are three microprocessors involved in running the printer: the one on the CB1, the one on the Manta M8P, and the one on the EBB SB2209 toolboard. Knowing how they all work together is important. The CB1 runs the show, the Manta gets delegated low level tasks like driving motors and fans from the CB1, and the EBB runs the Stealthburner in cooperation with the Manta.
 
-Both the Manta and the EBB run Klipper. However, you will be compiling a different version of Klipper for each board because their processors are different (though the same source code is used for each). There is also something called CanBoot that you will be compiling for the EBB as well. Canboot is what allows the toolhead to talk Canbus to the Manta.
+Both the Manta and the EBB run Klipper. However, you will be compiling a different version of Klipper for each board because their processors are different (though the same source code is used for each). There is also something called CanBoot that you will be compiling for the EBB as well. Canboot is what allows future updates of Klipper on the EBB to be done via Canbus instead of USB i.e. over the existing wiring of your completed printer.
 
 The process to get this all working is as follows:
 - First you will get the CB1 processor board up and running by creating a TF card with a Linux image created by BigTreeTech ([Flash CB1](#flash-cb1)).
@@ -170,6 +170,10 @@ If you realize you've run "make" with incorrect settings, you can always go back
 This will create the Klipper firmware file `out/klipper.bin` for the Manta.
 
 Next we will flash it to the Manta with DFU. To enter DFU mode, press on BOOT0 and click the RESET button (i.e. Press and hold BOOT0, press and release RESET, release BOOT0, all on the Manta).
+
+<Callout type="warning">
+Both the M8P here and the EBB later have the same USB ID when in DFU mode, so you should only ever put one of them in DFU mode at a time or you risk flashing the wrong device.
+</Callout>
 
 ![image-20231012022256313](https://img.mpx.wiki/i/2023/10/12/6526e8049db89.webp)
 
@@ -433,7 +437,20 @@ Query Complete
 
 All flash work is done. Now `4b94c57be78e` is your M8P uuid, and `2f0b1ce14660` is your toolboard uuid.
 
-Use these to replace the placeholder uuid values in`printer.cfg`. You can use the Mainsail interface to easily make these changes.
+Use these to replace the placeholder uuid values in`printer.cfg`. You can use the text editor built into the Mainsail web interface to easily make these changes. This annotated screenshot points out the key parts of the interface you'll need to know about for this.
+![Mainsail Interface](https://img.mpx.wiki/i/2024/01/24/65aff0f1451af.webp)
+
+You should end up with something that looks like this in your ```printer.cfg``` file, replacing the `canbus_uuid` values for the Manta MCU and the EBB with your values.  When your edits are done, select "SAVE & RESTART" from the top right corner of the editor.
+``` shell
+#####################################################################
+#   UUID Setting
+#####################################################################
+[mcu]
+canbus_uuid:4b94c57be78e    
+
+[mcu EBBCan]
+canbus_uuid: 2f0b1ce14660
+```
 
 Finally, remove the `v_usb` jumper on the M8P and `usb_5v` jumper on the EBB SB. Keep the 120R jumper on both the M8P and the EBB.
 
