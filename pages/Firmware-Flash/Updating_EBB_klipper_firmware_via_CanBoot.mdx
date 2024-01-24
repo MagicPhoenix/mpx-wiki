@@ -13,9 +13,10 @@ You will need the canbus ID for your EBB, it can be found in your printer.cfg fi
 
 
 Stop the klipper Service (This can be done from in mainsail)
+
 Connect to your printer via SSH
 
-```
+```shell
 $ cd ~/klipper
 $ make menuconfig
 ```
@@ -49,9 +50,9 @@ Canboot was recently renamed to Katapult. Depending on your installation you may
 
 Via SSH:
 
-```
+```shell
 cd ~/CanBoot/scripts
-python3 flashtool.py -i can0 -f ~/klipper/out/klipper.bin -u <uuid>, replacing <uuid> with the uuid for your EBB
+python3 flashtool.py -i can0 -f ~/klipper/out/klipper.bin -u <uuid>    # replacing <uuid> with the uuid for your EBB
 ```
 Wait for the flash to finish.
 Reboot your printer.

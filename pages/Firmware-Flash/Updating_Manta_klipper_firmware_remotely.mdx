@@ -1,7 +1,7 @@
 import { Callout } from 'nextra/components'
 
 
-# Updating klipper on the Manta
+# Updating klipper on the Manta remotely
 ## Requirements
 This is for use with a working printer that requires the klipper firmware on the Manta to be updated. You must have at least downloaded the CanBoot repo per the initial flashing instructions as we will use one of its scripts to put the Manta in DFU mode over CAN.
 
@@ -9,13 +9,17 @@ This is for use with a working printer that requires the klipper firmware on the
 
 You will need the canbus ID for your Manta, it can be found in your printer.cfg file under [mcu], write this down, you will need it later in the process.
 
+<Callout type="warning">
+Note that on some boards, like the Octopus Pro v1, entering DFU mode can cause undesired actions (such as powering the heater while in DFU mode). I experienced no issue while updating my Manta M8P V2, but this is noted in the klipper docs, so I'm passing it along.
+</Callout>
+
 ## Make The klipper firmware
 
-
 Stop the klipper Service (This can be done from in mainsail)
+
 Connect to your printer via SSH
 
-```
+```shell
 $ cd ~/klipper
 $ make menuconfig
 ```
@@ -55,7 +59,11 @@ $ make menuconfig
   ![image-20231012021820745](https://img.mpx.wiki/i/2023/10/12/6526e6ee74e55.webp)
 </details>
 
-Press Q to save.
+Press Q to save and then run `make` from the terminal:
+
+```shell
+$ make
+```
 
 ## Put the Manta in DFU mode via Canboot script
 
@@ -65,12 +73,12 @@ Canboot was recently renamed to Katapult. Depending on your installation you may
 
 Via SSH:
 
-```
-python3 ~/CanBoot/scripts/flashtool.py -i can0 -u <uuid> -r, replacing <uuid> with the uuid for your Manta
+```shell
+$ python3 ~/CanBoot/scripts/flashtool.py -i can0 -u <uuid> -r    # replacing <uuid> with the uuid for your Manta
 ```
 
 Let's verify that the Manta is in DFU mode:
-```
+```shell
 $ lsusb
 ```
 
@@ -80,7 +88,7 @@ There should be a DFU Mode device found. Record its ID, but normally it's `0483:
 
 ## Flash the Manta
 
-```
+```shell
 $ make flash FLASH_DEVICE=0483:df11
 ```
 
