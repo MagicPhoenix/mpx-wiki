@@ -1,67 +1,78 @@
+# CBT Kit M8P V1 + CB1 Start Guide
+## Introduction
+import { Callout } from 'nextra/components'
 
+There are three microprocessors involved in running the printer: the one on the CB1, the one on the Manta M8P, and the one on the EBB SB2209 toolboard. Knowing how they all work together is important. The CB1 runs the show, the Manta gets delegated low level tasks like driving motors and fans from the CB1, and the EBB runs the Stealthburner in cooperation with the Manta.
 
-# CBT Kit M8P+CB1 Start Guide
+Both the Manta and the EBB run Klipper. However, you will be compiling a different version of Klipper for each board because their processors are different (though the same source code is used for each). There is also something called CanBoot that you will be compiling for the EBB as well. Canboot is what allows future updates of Klipper on the EBB to be done via Canbus instead of USB i.e. over the existing wiring of your completed printer.
 
+The process to get this all working is as follows:
+- First you will get the CB1 processor board up and running by creating a TF card with a Linux image created by BigTreeTech ([Flash CB1](#flash-cb1)).
+- Next you will get Klipper running on the processor running on the Manta. That is the big chip in the middle of the board. ([Flash M8P](#flash-m8p)).
+- Next step is putting Canboot on the toolhead board with a connection between them that is initially USB so it can talk Canbus later. You do this because the toolboard isn't be able to talk Canbus out of the box ([Flash Canboot to EBB by USB](#flash-canboot-to-ebb-by-usb)).
+- The last big step is putting Klipper on the toolhead board because both ends need that for this whole thing to work ([Flash Klipper to EBB by USB](#flash-klipper-to-ebb-by-usb)).
+- After this, there are some final checks that everything is working ([Flash Checks](#flash-checks)). There is a ([Troubleshooting](#troubleshooting)) section at the end as well in case of problems.
 
+## Preparation
 
+You need to provide a USB Type-C cable to plug into the Manta that can provide 5V output. We recommend USB-Type A to Type C cables.
 
+<Callout type="warning">
+Some Power Delivery chargers may output over 5V via USB-C to USB-C type cables that could burn out your M8P)
+</Callout>
 
-## Preparing
-
-You need to prepare a USB Type-C cable and have 5V output.
-
-(Recommened USB-Type B to Type C, some PD charger may ouput over 5V via C2C cable, it may burn your M8P)
-
-
-Strongly recommened to use a USB Wall Charger, some PC USB ports don't have enough power and will cause random issues. 
-
+We also strongly recommend you use a USB Wall Charger: some PC USB ports don't have enough power to run the Manta plus the EBB, causing random issues. 
 
 ### Wiring
 
-Strongly recommened flash them before installed, wire like this 
+We strongly recommend flashing the M8P and the EBB before installing them into the printer. Wire them as shown.
 
 ![image-20230319031735759](https://img.mpx.wiki/i/2023/03/19/64160e52492e4.webp)
 
-Jumpers: V_USB on M8P, USB_5V on EBB SB, 120R on EBB SB
+<Callout type="warning">
+Do not connect the red and black wires on the Canbus cable or this will short out 5V to ground and let the magic smoke out. Do not leave them dangling as shown in the picture above. It is better to insulate the end of the red and black wires by tape or some other means to prevent accidental contact between the two wires, or between the wires and the Manta.
+</Callout>
+
+Connect the following jumpers and leave them connected until the checks at the end of this process are completed. Note that there are two different sizes of jumpers, so make sure you use the right size for each connection.
+- V_USB on M8P V1
+- USB_5V and 120R on EBB SB
 
 ![image-20230327115156735](https://img.mpx.wiki/i/2023/03/27/642112e07a5be.webp)
 
-
 ![image-20230327115407076](https://img.mpx.wiki/i/2023/03/27/6421136211267.webp)
 
-
-
-This pic is made by @Westy_Pity_Da_Fool, it maybe helpful to understand it, notice you need to plug USB cable to EBB SB2209.
+This pic is made by @Westy_Pity_Da_Fool. It may be helpful in understanding the wiring. Note that while it isn't shown clearly here, you also need to plug a USB cable between the Manta and the EBB SB2209 as well.
 
 ![Image](https://img.mpx.wiki/i/2023/08/22/64e4a315902c0.webp)
 
-Wries: 
-
-USB Cable from EBB SB to M8P
-
-Canbus Cable from EBB SB to M8P (canbus 2P connector only)
-
-M8P USB Power Cable
-
-Do not connect the red and black wires, leave them dangling and make sure they do not touch or short circuit each other
+Wiring:
+- USB cable from computer or wall supply to the M8P USB-C port.
+- USB Type-A to Type-C Data cable from one of the M8P USB-A ports to the EBB SB USB-C port. It is best to use the one that came packaged with the Manta as this is known to work well.
+- Canbus cable from EBB SB to M8P (Canbus two pin connector only. The red and black power wires should be taped off for safety.)
 
 ### Flash CB1
 
-Download the latest image name start with `CB1_Debian11_Klipper` from github, https://github.com/bigtreetech/CB1/releases 
+Download the latest image name starting with `CB1_Debian11_Klipper` from [the BTT Github](https://github.com/bigtreetech/CB1/releases)
 
-Then use `balenaEtcher ` flash it into your TF card, you don't need to unzip the image. 
+Then use `balenaEtcher ` to flash it into your TF card. You don't need to unzip the image. 
 
-While flash done,  replug the TF card, there have a BOOT partition shown on your PC.
-
-Edit `system.cfg` and change WIFI setting to yours.
+When the flash is done, replug the TF card in your PC. You should be able to access the BOOT partition on the card from your PC's file manager of choice.
 
 ![image-20230319215101298](https://img.mpx.wiki/i/2023/03/19/6417134728f27.webp)
 
+Edit `system.cfg` and change the WIFI setting to yours by replacing the values within the quotes (do not delete the quotes themselves).
+
 ![image-20230319215221809](https://img.mpx.wiki/i/2023/03/19/6417139804c92.webp)
 
-That's all, now just install the TF card to M8P and install CB1 to M8P. 
+That's all. Now just eject the card from the PC, install the card to the M8P, and install the CB1 to the M8P.
 
-Note: the TF card must install to `SOC-CARD`, not `MCU-CARD`
+<Callout type="warning">
+The TF card must install to the `SOC-CARD`, not the `MCU-CARD` slot.
+</Callout>
+
+<Callout type="info">
+It takes more force than you'd expect to install the CB1 on the M8P. You will feel it snap into place when properly inserted. Visually inspect the CB1 after mounting to ensure that the CB1 is flush against the Manta on all four corners.
+</Callout>
 
 ![image-20230327115012657](https://img.mpx.wiki/i/2023/03/27/6421127c71b33.webp)
 
@@ -69,25 +80,44 @@ Now power on and wait a few minutes, you should be able to see the CB1 IP addres
 
  ![image-20230319220132540](https://img.mpx.wiki/i/2023/03/19/641715bf451ad.webp)
 
-Use your brower visit the IP address, mailsail should work.
+Use your brower to visit the IP address shown on your router. The Mailsail web interface should be displayed
 
+### [Optional] Update
 
-
-### [Optional]Update
-
-Recommened :
-
-Update klipper to latest before start 
+We recommend updating Klipper to the latest version before proceeding.
 ![image-20230319014058625](https://img.mpx.wiki/i/2023/03/19/6415f7ac70442.webp)
-
-
 
 ### Set CB1 Can Bridge Bitrate
 
+These instructions and many of those that follow are done on the CB1 itself. The CB1 is accessed via an SSH terminal interface. How you do this is up to you. You *can* use a program like Mobaxterm to give you a bit of a GUI interface, but most people choose to use the Command Prompt on Windows or a Terminal program on MacOS / Linux.
+
+<Callout type="info">
+We use a ```$``` symbol to show most of the single line commands you need to type into the command line (like the ```ssh``` command that follows). Commands that might generate a lot of output from the CB1 are preceded with something that looks like ```biqu@BTT-CB1:~```, and will be followed by the expected output from the CB1 in various colors.
+</Callout>
+
+Use ```ssh``` to access the CB1 from your PC:
+
 ```
-sudo nano /etc/network/interfaces.d/can0
+$ ssh biqu@192.168.2.10
+biqu@192.168.2.10's password:biqu  (<-- Password will not be echoed to screen)
 ```
-Change bitrate to 1000000
+
+<Callout type="info">
+You might get a warning the first time you ssh into the CB1. Acknowledge any prompt and proceed as we know this connection is a safe one.
+</Callout>
+
+<Callout type="info">
+If it wasn't clear from the above above, the CB1 is accessed with the username ```biqu``` and password ```biqu```.
+</Callout>
+
+Next we need to make sure that the CB1 uses the proper Canbus data rate. This information is stored in a configuration file that we will edit with a simple editor called ```nano```. The editor name is preceded by ```sudo```, telling Linux that we want to run this as a superuser with unlimited powers and permissions.
+
+```shell
+$ sudo nano /etc/network/interfaces.d/can0
+```
+
+Enter the password ```biqu``` if prompted. Change the bitrate value to 1000000 if necessary and any other values as required. The file should look *exactly* like this when you are done:
+
 ```
 allow-hotplug can0
 iface can0 can static
@@ -95,65 +125,57 @@ iface can0 can static
     up ifconfig $IFACE txqueuelen 1024
 ```
 
-Reboot CB1 by `reboot`
-
-
-
-
-
-
+Save the file within the editor with Ctrl-O and then Enter to acknowledge. Reboot the CB1 from the command line:
+```shell
+$ reboot
+```
 
 ## Flash M8P 
 
 ```shell
-cd ~/klipper
-make menuconfig
+$ cd ~/klipper
+$ make menuconfig
 ```
 
-Then set it as this pic
-
-```
-[*] Enable extra low-level configuration options
-    Micro-controller Architecture (STMicroelectronics STM32)  --->
-    Processor model (STM32G0B1)  --->
-    Bootloader offset (8KiB bootloader)  --->
-    Clock Reference (8 MHz crystal)  --->
-    Communication interface (USB to CAN bus bridge (USB on PA11/PA12))  --->
-    CAN bus interface (CAN bus (on PD12/PD13))  --->
-    USB ids  --->
-(1000000) CAN bus speed
-()  GPIO pins to set at micro-controller startup
-```
-
-
+Then set everything up as shown. Use the arrow keys to navigate and Enter to change selections. Enter will also take you into sub-menus indicated by ```--->```
 
 ![image-20230319014546632](https://img.mpx.wiki/i/2023/03/19/6415f8cc73d94.webp)
 
-Press Q and save it
+Press Q to save and then run `make` from the terminal.
 
 ```shell
-make
+$ make
 ```
 
-It would create klipper firmware file `out/klipper.bin`
+<Callout type="info">
+If you realize you've run "make" with incorrect settings, you can always go back and do ```make menuconfig```, then ```make``` again.
+</Callout>
 
-Flash it with DFU 
+This will create the Klipper firmware file `out/klipper.bin` for the Manta.
 
-Press on BOOT0 and click RESET button 
+Next we will flash it to the Manta with DFU. To enter DFU mode, press on BOOT0 and click the RESET button (i.e. Press and hold BOOT0, press and release RESET, release BOOT0, all on the Manta).
+
+<Callout type="warning">
+Both the M8P here and the EBB later have the same USB ID when in DFU mode, so you should only ever put one of them in DFU mode at a time or you risk flashing the wrong device.
+</Callout>
 
 ![image-20230319015740528](https://img.mpx.wiki/i/2023/04/06/642e8327b968b.webp)
 
-```
-lsusb
+Let's verify that the Manta is in DFU mode:
+
+```shell
+$ lsusb
 ```
 
 ![image-20230319015826219](https://img.mpx.wiki/i/2023/04/29/644c499b9642d.webp)
 
-There would be a DFU Mode device found, remember its ID, but normally it's `0483:df11`
+There should be a DFU Mode device found. Record its ID, but normally it's `0483:df11`. Now flash it.
 
+```shell
+$ make flash FLASH_DEVICE=0483:df11
 ```
-make flash FLASH_DEVICE=0483:df11
-```
+
+Your command and the resulting output should look like this:
 
 ```shell
 biqu@BTT-CB1:~/klipper$ make flash FLASH_DEVICE=0483:df11
@@ -199,15 +221,17 @@ If attempting to flash via 3.3V serial, then use:
 make: *** [src/stm32/Makefile:100: flash] Error 255
 ```
 
-if it shows like this, then you have flashed it successfully, 
+If it shows like this, then you have flashed it successfully, 
 
-now click RST button to restart M8P (it won't restart CB1)
+Now click the RST button on the Manta to restart the M8P (it won't restart CB1).
 
 Check M8P Can uuid:
 
+```shell
+$ python3 lib/canboot/flash_can.py -q
 ```
-python3 lib/canboot/flash_can.py -q
-```
+
+Your command and the resulting output should look like this:
 
 ```shell
 biqu@BTT-CB1:~/klipper$ python3 lib/canboot/flash_can.py -q
@@ -217,59 +241,50 @@ Detected UUID: 4b94c57be78e, Application: Klipper
 Query Complete
 ```
 
-remember your M8P can uuid `4b94c57be78e` (yours should be different)
+Record your M8P can uuid. It is `4b94c57be78e` in this example. Yours should be different.
 
+## Flash Canboot to EBB by USB
 
+If you didn't do it at the start of this process, plug the USB-5V and 120R jumpers on the EBB and connect it to the M8P via a USB-A to USB-C data cable like that provided with the Manta.
 
-## Flash EBB SB2209
+As noted in the introduction, we need to flash Canboot to the EBB before we flash Klipper to it.
 
-Plug the USB-5V jumper and connect it to M8P via USB cable. 
-
-```
-cd ~
-git clone https://github.com/Arksine/CanBoot
-cd CanBoot
-make menuconfig
-```
-
-```
-(Top) 
-                        CanBoot Configuration v0.0.1-41-gffd8ac6
-    Micro-controller Architecture (STMicroelectronics STM32)  --->
-    Processor model (STM32G0B1)  --->
-    Build CanBoot deployment application (Do not build)  --->
-    Clock Reference (8 MHz crystal)  --->
-    Communication interface (CAN bus (on PB0/PB1))  --->
-    Application start offset (8KiB offset)  --->
-(1000000) CAN bus speed
-()  GPIO pins to set on bootloader entry
-[*] Support bootloader entry on rapid double click of reset button
-[ ] Enable bootloader entry on button (or gpio) state
-[*] Enable Status LED       
-(PA13)  Status LED GPIO Pin
+```shell
+$ cd ~
+$ git clone https://github.com/Arksine/CanBoot
+$ cd CanBoot
+$ make menuconfig
 ```
 
-
-
-
+<Callout type="info">
+Canboot was recently renamed to Katapult. Read one as the other and you'll be fine.
+</Callout>
 
 ![image-20230319022136925](https://img.mpx.wiki/i/2023/03/19/64160132e00e8.webp)
 
-press Q and save it then run `make`
+Press Q to save and then run `make` from the terminal.
 
-Hold on BOOT button and press RST click on EBB SB
+```shell
+$ make
+```
 
-`lsusb`
+Hold down the BOOT button and click RST on the EBB SB to put the EBB into DFU mode. Let's check if it worked:
+
+```shell
+$ lsusb
+```
 
 ![image-20230319022359143](https://img.mpx.wiki/i/2023/03/19/641601c0bbce3.webp)
 
-There would be another DFU device `0483:df11`
+There should be another DFU device `0483:df11`
 
-Flash it
+Now we can flash Canboot to the EBB.
 
 ```shell
-dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000 -D ~/CanBoot/out/canboot.bin
+$ dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000 -D ~/CanBoot/out/canboot.bin
 ```
+
+Your command and the resulting output should look like this:
 
 ```shell
 biqu@BTT-CB1:~/CanBoot$ dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000 -D ~/CanBoot/out/canboot.bin
@@ -298,60 +313,56 @@ Download done.
 File downloaded successfully
 ```
 
+## Flash Klipper to EBB by USB
 
+Remember in the Introduction we said we were going to flash Klipper to both the Manta and the EBB?  We already did the Manta so now it is the EBB's turn.
 
-## Flash Klipper by USB 
-
+```shell
+$ cd ~/klipper
+$ make menuconfig
 ```
-cd ~/klipper
-make menuconfig
-```
-
-```
-(Top) 
-                             Klipper Firmware Configuration
-[*] Enable extra low-level configuration options
-    Micro-controller Architecture (STMicroelectronics STM32)  --->
-    Processor model (STM32G0B1)  --->
-    Bootloader offset (8KiB bootloader)  --->
-    Clock Reference (8 MHz crystal)  --->
-    Communication interface (CAN bus (on PB0/PB1))  --->
-(1000000) CAN bus speed
-()  GPIO pins to set at micro-controller startup
-```
-
 ![image-20230319023921521](https://img.mpx.wiki/i/2023/03/19/6416055b8f5b1.webp)
 
-press Q and save it, then run `make`
+Press Q to save and then run `make` from the terminal:
 
-Set EBB SB2209 to DFU mode
+```shell
+$ make
+```
 
-Hold and press RST to DFU mode, run lsusb 
+Set EBB SB2209 to DFU mode by holding BOOT and clicking RST to enter DFU mode. Then run `lsusb`
 
 ![image-20230319024157881](https://img.mpx.wiki/i/2023/03/19/641605f7a7250.webp)
+
 Flash it
 
+```shell
+$ dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08002000 -D out/klipper.bin
 ```
-dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08002000 -D out/klipper.bin
-```
 
+<Callout type="info">
+Note how the address is 0x08002000 here vs the 0x08000000 when canboot was flashed. This prevents the first flash on the toolhead from being overwritten by the second
+</Callout>
 
+## Flash Checks
 
-### Check
+<Callout type="info">
+The python-based checks don't always work right, and some people have more luck than others getting them to work. Powering everything down and back up might increase your chances of getting them working. Generally speaking, if the flash commands complete successfully and the output looked as expected, it *should* be OK.
+</Callout>
 
-1.Canboot Check 
+1. Canboot Check 
 
-Double click RST button, the red LED should blink.
+Double click the RST button on the EBB. The red LED should blink.
 
-```
-cd ~/klipper
-python3 lib/canboot/flash_can.py -q
+```shell
+$ cd ~/klipper
+$ python3 lib/canboot/flash_can.py -q
 ```
 
 If it shows like this, then Canboot has flashed successfully.
 
-```
+```shell
 biqu@BTT-CB1:~/klipper$ python3 lib/canboot/flash_can.py -q
+
 Resetting all bootloader node IDs...
 Checking for canboot nodes...
 Detected UUID: 4b94c57be78e, Application: Klipper
@@ -359,15 +370,15 @@ Detected UUID: 2f0b1ce14660, Application: CanBoot
 Query Complete
 ```
 
-2.Klipper Check
+2. Klipper Check
 
-click RST Button, LED shouldn't blink anymore 
+Click the RST Button on the EBB. The LED shouldn't blink anymore.
 
 ```
-python3 lib/canboot/flash_can.py -q
+$ python3 lib/canboot/flash_can.py -q
 ```
 
-if it shows like this, klipper has flashed successfully
+If it shows like this, Klipper has flashed successfully.
 
 ```shell
 biqu@BTT-CB1:~/klipper$ python3 lib/canboot/flash_can.py -q
@@ -378,16 +389,37 @@ Detected UUID: 2f0b1ce14660, Application: Klipper
 Query Complete
 ```
 
-
-
 ![image-20230319031104014](https://img.mpx.wiki/i/2023/03/19/64160cc9b2011.webp)
 
+All flash work is done. Now `4b94c57be78e` is your M8P uuid, and `2f0b1ce14660` is your toolboard uuid.
 
+Use these to replace the placeholder uuid values in`printer.cfg`. You can use the text editor built into the Mainsail web interface to easily make these changes. This annotated screenshot points out the key parts of the interface you'll need to know about for this.
+![Mainsail Interface](https://img.mpx.wiki/i/2024/01/24/65aff0f1451af.webp)
 
-All flash works done, now `4b94c57be78e` is your M8P uuid, and `2f0b1ce14660` is toolboard uuid.
+You should end up with something that looks like this in your ```printer.cfg``` file, replacing the `canbus_uuid` values for the Manta MCU and the EBB with your values.  When your edits are done, select "SAVE & RESTART" from the top right corner of the editor.
 
-Use these replace `printer.cfg`
+```
+#####################################################################
+#   UUID Setting
+#####################################################################
 
-Remove `v_usb` jumper on M8P and `usb_5v` jumper on EBB SB
+[mcu]
+canbus_uuid:4b94c57be78e    
 
-Keep 120R jumper
+[mcu EBBCan]
+canbus_uuid: 2f0b1ce14660
+```
+
+Finally, remove the `v_usb` jumper on the M8P and `usb_5v` jumper on the EBB SB. Keep the 120R jumper on both the M8P and the EBB.
+
+## Troubleshooting 
+
+**Problem**: I can't see the EBB Toolhead using `lsusb` after flashing the Manta but its Power LED is on.
+- Verify that you are using a USB data cable and not a charging cable
+- Make sure the USB-C cable is plugged *firmly* into the EBB. It will click into place when properly connected.
+
+**Problem**: I flashed the Manta board and I see an entry for it with `lsusb` after doing so, but it disappears from `lsusb` after I reboot or cycle power.
+- The Manta bootloader has probably been corrupted, possibly by flashing the EBB Canboot image to the Manta instead of the EBB by mistake. Follow [these instructions on the BTT Github](https://github.com/bigtreetech/Manta-M8P/tree/master/V2.0/Firmware) to restore the bootloader on the Manta.
+
+**Problem**: I am using a Raspberry Pi CM4 instead of the BigTreeTech CB1 and ```username: biqu```, ```password: biqu``` does not work for me.
+- See the BTT manual. For this board it should be ```username: pi```, ```password: raspberry```
