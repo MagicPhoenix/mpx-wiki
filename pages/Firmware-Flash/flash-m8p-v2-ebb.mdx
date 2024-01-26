@@ -1,6 +1,10 @@
-# CBT Kit M8P V2 + CB1 Start Guide
+# CBT Kit Manta M8P V2 + CB1 Start Guide
 ## Introduction
 import { Callout } from 'nextra/components'
+
+<Callout type="info">
+MPX kits started shipping the V2 version of the Manta M8P in late 2023. If you have the older V1 version of the Manta, please refer to the [Flash M8P V1 and EBB SB2209](./flash-m8p-v1-ebb.mdx) page.
+</Callout>
 
 There are three microprocessors involved in running the printer: the one on the CB1, the one on the Manta M8P, and the one on the EBB SB2209 toolboard. Knowing how they all work together is important. The CB1 runs the show, the Manta gets delegated low level tasks like driving motors and fans from the CB1, and the EBB runs the Stealthburner in cooperation with the Manta.
 
@@ -128,7 +132,37 @@ iface can0 can static
     up ifconfig $IFACE txqueuelen 1024
 ```
 
-Save the file within the editor with Ctrl-O and then Enter to acknowledge. Reboot the CB1 from the command line:
+Save the file within the editor with Ctrl-O and then Enter to acknowledge. 
+
+### Disable Unnecessary Services
+
+By default, the BTT image for the CB1 runs several background services that are not properly configured by default and will repeatedly fail and restart every few seconds.  One service called `hostapd` tries to turn your printer into a wireless hotspot.  The other service called `klipper-mcu` allows use of the CB1 processor's GPIO and SPI ports as if it was a second MCU on top of the one already built into the Manta. Neither of these services is required for our purposes, and disabling them will ease the workload on the CB1 and minimize spam in your error logs.
+
+Assuming you are still connected to your printer via `ssh` from the previous step, enter these two commands to disable the two services.
+``` shell
+$ sudo systemctl disable hostapd
+$ sudo systemctl disable klipper-mcu
+```
+
+Your command and the resulting output should look like this:
+
+``` shell
+biqu@BTT-CB1:~$ sudo systemctl disable hostapd
+Synchronizing state of hostapd.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable hostapd
+Removed /etc/systemd/system/multi-user.target.wants/hostapd.service.
+biqu@BTT-CB1:~$ sudo systemctl disable klipper-mcu
+Removed /etc/systemd/system/multi-user.target.wants/klipper-mcu.service.
+```
+
+<Callout type="info">
+If you have no use for KlipperScreen (the software that supports the printer's touchscreen GUI), you can disable it now or in the future with:
+```shell
+$ sudo systemctl disable KlipperScreen
+```
+</Callout>
+
+Reboot the CB1 from the command line for these changes and those in the previous section to take effect:
 ```
 $ reboot
 ```
