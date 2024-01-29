@@ -1,1 +1,47 @@
+### My linear rails are crunchy, stiff, gritty, etc.
 
+All of our rails come with a preload, higher preload bearings never feel great since the balls are rolling under load at all times. But this will be helpful to print quality. 
+
+
+
+### My CB1 doesn't work and I can't get an IP 
+
+Step A: Make sure the TF card is flashed and in the right slot. Use the slot labeled SOC-CARD as there are 2 TF card slots on M8P. 
+
+Step B: Check 3.3V, 5V, 12V LED on M8P, somewhere may have a short if any leds don;t work. remove all connecters from M8P and try again.
+
+
+
+### Disco LEDs doesn't work 
+
+The disco cable connectors on each side are not same, make sure the label is right. Cable goes to DIN on the Disco. When linking/chaining the cable goes from DOUT on one to to DIN on the other. 
+
+
+
+### Y Endstop never triggered and/or getting wrong chamber temps
+
+It's not your fault, it's ours.
+
+There are wiring sequence errors in some Y endstop PCB cables. 
+
+You can use a multimeter check it. If there are errors, you can try using tweezers or a similar tool to extract the terminals and reinsert them correctly. It usually happens on 1/3 pins.
+
+If you have any trouble with it please contact us we will send a replacement.
+
+
+
+![fe2bcde90dfd31e8f81546b8465df8a1](https://img.mpx.wiki/i/2023/06/15/648ad449beb11.webp)
+
+### Tap never triggered
+
+It is highly likely that the issue is indeed caused by wiring sequence errors. In that case, you will need to replace the terminals in a similar way as the Y endstop. You can easily exchange it on tap side (the PH2.0 connector).
+
+If you have trouble with it, please contact us to get a replacement.
+
+### Timer too close issue and klipper shutdown
+
+It usually happens with OrcaSlicer.  First make sure the wires are fine. You can check it with a multimeter. 
+
+If wires are fine, you can try these steps:
+1. Set ARC G2/3 bigger, like 0.2/0.3 
+2. Disable the dynamic fan control of OrcaSlicer.
