@@ -4,8 +4,9 @@
     "type": "separator",
     "title": "VORON Kits"
   },
-  "VORON-2.4-CBT-KIT": "2.4 CBT Kit",
-  "VORON-TRIDENT-CBT-KIT": "Trident CBT Kit",
+  "GENERAL-KIT": "General Kit Info",
+  "VORON-2.4-CBT-KIT": "V2.4 CBT Specific",
+  "VORON-TRIDENT-CBT-KIT": "Trident CBT Specific",
   "-- Mods": {
     "type": "separator",
     "title": "Mods"

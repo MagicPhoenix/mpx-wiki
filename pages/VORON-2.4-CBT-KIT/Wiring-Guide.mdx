@@ -1,26 +1,18 @@
-# Wiring Guide
-
 import { Callout } from 'nextra/components'
+
+# V2.4 CBT Wiring Guide
+
+This page covers the wiring specific to the V2.4 printer. Please also review the [General Wiring Guide](../GENERAL-KIT/Wiring-Guide.mdx) for information common to both the V2.4 and the Trident (Stealthburner, Disco LEDs, etc).
 
 ## Before You Start
 
-<Callout type="info">
-  Make sure your LRS-200-24 110V/230V Switch is in the right orientation.
+<Callout type="warning">
+  Make sure the 110V/230V switch on your LRS-200-24 power supply is in the right orientation.
 </Callout>
 
 <Callout type="info">
-
-Important:
-
-We strongly recommend to flash M8P/SB2209 before you install them, check https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v1-ebb or https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v2-ebb  (Depending on your M8P version)
-
-This usually saves you 2 hours or more.
-
+We strongly recommend you flash the M8P/SB2209 before you install them. This usually saves you 2 hours or more of work.  Check [this page](../Firmware-Flash/flash-m8p-v2-ebb.mdx) if you have a Manta M8P V2, [or this page](../Firmware-Flash/flash-m8p-v1-ebb.mdx) if you have a Manta M8P V1. Note that the kits have been shipping with V2 since late fall of 20223.
 </Callout>
-
-
-
-
 
 Z Chain:
 
@@ -30,34 +22,19 @@ You may have to remove a few links according to your build size.
 
 ##  Layout
 
-Use 3M 5952 Tape to mount PVC trunkings. 
+Use 3M 5952 Tape to mount the PVC trunkings. We recommend you clean the area to be bonded with IPA (Isopropyl Alcohol) to ensure good adhesion.
 
+Our PSU mounting is different from the official Voron one. Please refer to the [Print Guide](./Print-Guide.mdx) for instructions.
 
-
-<Callout type="info">
-
-We recommend to clean the area to be bonded with alcohol or IPA (Isopropyl Alcohol). 
-
-Our PSU mounting is different from the official one. Please refer to the Print Guide for instructions.
-
-Notice the SSR direction. 
-
+<Callout type="warning">
+Note the orientation of the Solid State Relay (SSR). It has an AC side and a DC side. **You must be extremely careful** that you don't wire the SSR the wrong way around or you will damage it and, potentially, other parts of the printer as well.
 </Callout>
-
-
-
-
-
 
 ![image-20230401013019814](https://img.mpx.wiki/i/2023/12/30/658f10f939afc.webp)
 
 ## AC Wiring
 
-
-
 ![](https://img.mpx.wiki/i/2023/12/30/658f10fe3a758.webp)
-
-
 
 ## DC Wiring
 
@@ -73,15 +50,11 @@ Notice the SSR direction.
 
 ![image-20230815235820662](https://img.mpx.wiki/i/2023/12/30/658f11103e1f9.webp)
 
-
-
 ### Color Wiring
 
 ![image-20230401021429478](https://img.mpx.wiki/i/2023/12/30/658f111000f71.webp)
 
 ![image-20230401021917997](https://img.mpx.wiki/i/2023/12/30/658f111331c37.webp)
-
-
 
 ### M8P V2 with Mini12864 V2
 
@@ -95,19 +68,11 @@ Notice the SSR direction.
 
 <Callout type="warning">
 
-Note:
-
-The default wires are tinned, solder cold flows/creeps under the load and can become a fire-hazard.
-
-You can crimp it with a pin terminal or cut them off and use bare wire instead. 
+The default wires are tinned. Solder cold flows/creeps under load and can become a fire-hazard. You can crimp the connection with a pin terminal or cut them off and use bare wire in the terminal blocks instead.
 
 </Callout>
 
-
-
 ![image-20230401022212028](https://img.mpx.wiki/i/2023/12/30/658f1117c5818.webp)
-
-
 
 ### M8P Canbridge Wire
 
@@ -116,89 +81,3 @@ You can crimp it with a pin terminal or cut them off and use bare wire instead.
 ## Wiring Complete
 
 ![image-20230401023000812](https://img.mpx.wiki/i/2023/12/30/658f11230574a.webp)
-
-## Disco Wiring
-
-<Callout type="info">
-
-You need to use the modified `Z_belt_cover` STL file. Check our print guide.
-
-If you are using MPX Ultra Z Belt it also works.
-
-</Callout>
-
-<Callout type="info">
-
-Notice the wire label on the cable of both ends. The cable is directional.
-
-The side labeled `DIN` is the `IN` port, the cable from M8P should go in DIN side. 
-
-</Callout>
-
-![image-20240117124617354](https://img.mpx.wiki/i/2024/01/17/65a75bce2faee.webp)
-
-#### M8P V1
-
-![image-20230401024314626](https://img.mpx.wiki/i/2023/12/30/658f112aa580b.webp)
-
-
-#### M8P V2
-<Callout type="info">
-
-If you have the M8P V2.0, you need to connect the Disco in a daisy chain configuration, as M8P V2 only has one RGB port.
-
-The long cable still from M8P, then goes into the `DIN side` of the first stick, then another cable plugged from the `DOUT` of the first stick into the `DIN` of the second stick.
-
-</Callout>
-
-
-
-
-![image-20231025211848032](https://img.mpx.wiki/i/2023/12/30/658f11327db8d.webp)
-
-![image-20230401024548455](https://img.mpx.wiki/i/2023/12/30/658f1138e0844.webp)
-
-![image-20230401030458219](https://img.mpx.wiki/i/2023/12/30/658f11368e49d.webp)
-
-<Callout type="info">
-
-Use extrusion covers to hide wires. 
-
-They can also be used to hide B stepper wires. 
-
-</Callout>
-
-## Toolhead
-
-### Fan &amp; Stealthburner Leds
-
-![image-20230401031445022](https://img.mpx.wiki/i/2023/12/30/658f113b86dd6.webp)
-
-### EBB 2209 
-
-#### Jumpers
-
-![image-20230401031704743](https://img.mpx.wiki/i/2023/12/30/658f113adb6ce.webp)
-
-#### Wiring 
-
-#### X Endstop &amp; Voron Tap
-
-![image-20230401032234189](https://img.mpx.wiki/i/2023/12/30/658f113c34253.webp)
-
-#### NTC100K
-
-![image-20230401042201822](https://img.mpx.wiki/i/2023/12/30/658f114225302.webp)
-
-There's some glue on the NTC100K thermistor's connector, it may interfere with the CW2.
-In this case, you can try to remove some glue or cut a small gap there.
-
-![image-20230408005919601](https://img.mpx.wiki/i/2023/12/30/658f1143bf79a.webp)
-
-#### Optional Printed Parts
-
-BIGTREETECH has a modified CW2 main_body and cable_door printed parts, they can make the wiring of SB2209 more presentable.
-
-[cable_door_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/cable_door_EBB_SB.stl)
-
-[main_body_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/main_body_EBB_SB.stl)
