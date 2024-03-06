@@ -2,55 +2,39 @@
 
 import { Callout } from 'nextra/components'
 
+# Trident Wiring Guide
+
+This page covers the wiring specific to the Trident printer. Please also review the [General Wiring Guide](../GENERAL-KIT/Wiring-Guide.mdx) for information common to both the V2.4 and the Trident (Stealthburner, Disco LEDs, etc).
+
 ## Before You Start
 
-<Callout type="info">
-  Make sure your LRS-200-24 110V/230V Switch is in the right orientation.
+<Callout type="warning">
+  Make sure the 110V/230V switch on your LRS-200-24 power supply is in the right orientation.
 </Callout>
 
 <Callout type="info">
-
-Important:
-
-We strongly recommend to flash M8P/SB2209 before you install them, check https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v1-ebb or https://mpx-wiki.vercel.app/Firmware-Flash/flash-m8p-v2-ebb  (Depending on your M8P version)
-
-This usually saves you 2 hours or even more time.
-
+We strongly recommend you flash the M8P/SB2209 before you install them. This usually saves you 2 hours or more of work.  Check [this page](../Firmware-Flash/flash-m8p-v2-ebb.mdx) if you have a Manta M8P V2, [or this page](../Firmware-Flash/flash-m8p-v1-ebb.mdx) if you have a Manta M8P V1. Note that the kits have been shipping with V2 since late fall of 20223.
 </Callout>
-
 
 ### BIGTREETECH SPI35 Touch Screen
 
-<Callout type="info">
+We strongly recommend you install the Flat Flexible cable for the display on the Manta M8P side before you install the Manta on the DIN rails. The shiny contacts on the cable should face the board. The connector is on the back of the M8P.
 
-We strongly recommend you install the FPC cable on the M8P side before you install on DIN rails.
+![image-20230909143109123](https://img.mpx.wiki/i/2023/09/09/64fc1130d78ba.webp)
 
-</Callout>
-
-Uncomment this line from BoardEnv.txt, this file is in CB1 TF card /boot
+Uncomment this line from BoardEnv.txt. This file is in CB1 TF card /boot.
 
 ![image-20230731155412439](https://img.mpx.wiki/i/2023/08/08/64d25f6de2d5b.webp)
 
-
 ##  Layout
 
-Use 3M 5952 Tape to mount PVC trunkings. 
+Use 3M 5952 Tape to mount the PVC trunkings. We recommend you clean the area to be bonded with IPA (Isopropyl Alcohol) to ensure good adhesion.
 
-<Callout type="info">
+Our PSU mounting is different from the official Voron one. Please refer to the [Print Guide](./Print-Guide.mdx) for instructions.
 
-We recommend to clean the area to be bonded with alcohol or IPA (Isopropyl Alcohol). 
-
-Our PSU mounting is different from the official one. Please refer to the Print Guide for instructions
-
-Notice the SSR direction. 
-
+<Callout type="warning">
+Note the orientation of the Solid State Relay (SSR). It has an AC side and a DC side. **You must be extremely careful** that you don't wire the SSR the wrong way around or you will damage it and, potentially, other parts of the printer as well.
 </Callout>
-
-We strongly recommend to install the display FPC cable before mounting the M8P. 
-
-The connector is on the back of M8P.
-
-![image-20230909143109123](https://img.mpx.wiki/i/2023/09/09/64fc1130d78ba.webp)
 
 ![elec_layout](https://img.mpx.wiki/i/2023/07/24/64be9adeae23f.webp)
 
@@ -100,11 +84,7 @@ Note: you need to remove the outer sheath of SB2209 cable for some length on ele
 
 <Callout type="warning">
 
-Note:
-
-The default wires are tinned, solder cold flows/creeps under the load and can become a fire-hazard.
-
-You can crimp it with a pin terminal or cut it off and use bare wire instead. 
+The default wires are tinned. Solder cold flows/creeps under load and can become a fire-hazard. You can crimp the connection with a pin terminal or cut them off and use bare wire in the terminal blocks instead.
 
 </Callout>
 
@@ -119,40 +99,3 @@ You can crimp it with a pin terminal or cut it off and use bare wire instead.
 ## Wiring Complete
 
 ![image-20230909143926693](https://img.mpx.wiki/i/2023/09/09/64fc1323a5769.webp)
-
-
-## Toolhead
-
-### Fan &amp; Stealthburner Leds
-
-![image-20230401031445022](https://img.mpx.wiki/i/2023/04/01/6427312935cbb.webp)
-
-### EBB 2209 
-
-#### Jumpers
-
-![image-20230401031704743](https://img.mpx.wiki/i/2023/04/01/642731b3f0e32.webp)
-
-#### Wiring 
-
-#### X Endstop &amp; VORON Tap
-
-![image-20230401032234189](https://img.mpx.wiki/i/2023/04/01/642732fc9b45e.webp)
-
-#### NTC100K
-
-![image-20230401042201822](https://img.mpx.wiki/i/2023/04/01/642740ec153d9.webp)
-
-There's some glue on the NTC100K thermistor's connector, it may interfere with the CW2.
-In this case, you can try to remove some glue or cut a small gap there.
-
-![image-20230408005919601](https://img.mpx.wiki/i/2023/04/08/64304beb1d725.webp)
-
-#### Optional Printed Parts
-
-BIGTREETECH has a modified CW2 main_body and cable_door printed part, they can make the wiring of SB2209 more presentable.
-
-[cable_door_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/cable_door_EBB_SB.stl)
-
-[main_body_EBB_SB.stl](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/Custom%20Printed%20Parts/main_body_EBB_SB.stl)
-

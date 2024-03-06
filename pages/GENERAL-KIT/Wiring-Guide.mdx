@@ -1,0 +1,108 @@
+import { Callout } from 'nextra/components'
+
+# General Wiring Guide
+
+This page covers the wiring common to both the V2.4 and the Trident (Stealthburner, Disco LEDs, etc). Please also review the guides specific to your printer, either the [V2.4 Wiring Guide](../VORON-2.4-CBT-KIT/Wiring-Guide.mdx) or the [Trident Wiring Guide](../VORON-TRIDENT-CBT-KIT/Wiring.mdx). 
+
+## Before You Start
+
+<Callout type="warning">
+  Make sure the 110V/230V switch on your LRS-200-24 power supply is in the right orientation.
+</Callout>
+
+<Callout type="info">
+We strongly recommend you flash the M8P/SB2209 before you install them. This usually saves you 2 hours or more of work.  Check [this page](../Firmware-Flash/flash-m8p-v2-ebb.mdx) if you have a Manta M8P V2, [or this page](../Firmware-Flash/flash-m8p-v1-ebb.mdx) if you have a Manta M8P V1. Note that the kits have been shipping with V2 since late fall of 2023.
+</Callout>
+
+## EBB SB2209 Toolhead
+
+### Jumpers
+
+There are three jumpers that must be installed on the toolhead: two to select the fan voltage and one to select the 120 ohm resistor that terminates the Canbus.
+
+![image-20230401031704743](https://img.mpx.wiki/i/2023/12/30/658f113adb6ce.webp)
+
+### X Endstop &amp; Voron Tap
+
+The X-axis limit switch and Voron Tap plug into the SB2209 as shown. Note that if you elect to use [sensorless homing](../Firmware-Setting/sensorless-homing-m8p-v2.mdx), the limit switch must not be installed.
+
+![image-20230401032234189](https://img.mpx.wiki/i/2023/12/30/658f113c34253.webp)
+
+### NTC100K
+
+There's some glue on the NTC100K thermistor's connector that may interfere with the CW2.  In this case, you can try to remove some glue or cut a small gap there. Note that the NTC100K is not used if you ordered the Rapido hotend since it has its own thermistor built in.
+
+![image-20230401042201822](https://img.mpx.wiki/i/2023/12/30/658f114225302.webp)
+
+This image shows the SB2209 installed on the body of the Stealthburner. Note that the heatsink is mounted not to the processor but to a bare area of the board near the top-right corner.
+
+![image-20230408005919601](https://img.mpx.wiki/i/2023/12/30/658f1143bf79a.webp)
+
+### Optional Printed Part
+
+BIGTREETECH has a modified CW2 main_body and cable_door printed parts. They can improve the fit of the SB2209 within the Stealthburner.
+
+- [BIGTREETECH SB2209 Github STLs](https://github.com/bigtreetech/EBB/tree/master/EBB%20SB2240_2209%20CAN/STL)
+- [Cable Cover for PCB V1.2](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/STL/Cable_Cover_For_PCB_V1.2.stl)
+- [Main Body v1.2](https://github.com/bigtreetech/EBB/blob/master/EBB%20SB2240_2209%20CAN/STL/Main_Body_V1.2.stl)
+
+
+## EBB SB0000 Expansion Board
+
+<Callout type="warning">
+
+**Be extremely careful** when plugging the expansion board into the SB2209 Toolhead. It is not difficult to be "off by one" on the 14-pin connector when plugging these two boards together. Doing so will burn out a small level shifter on the expansion board required for the LEDs to work.
+
+</Callout>
+
+The Stealthburner LEDs and both fans plug into the expansion board that in turn plugs into the SB2209 toolhead board. The small holes on the plastic connectors that show the connector face away from the board when the polarity is correct.
+
+![image-20230401031445022](https://img.mpx.wiki/i/2023/12/30/658f113b86dd6.webp)
+
+
+## (Optional) Disco Wiring
+<Callout type="info">
+
+This portion of the wiki only discusses the wiring. The changes you need to make to your `printer.cfg` file so that the LEDs will be recognized by Klipper are detailed in the [Firmware Guide](../Firmware#disco-led)
+
+</Callout>
+
+<Callout type="info">
+
+You need to use the modified `Z_belt_cover` STL file if your printer is a V2.4. Check our [V2.4 Print Guide](../VORON-2.4-CBT-KIT/Print-Guide.mdx) for details. If you are using the MPX Ultra Z Belt, it also works.
+
+</Callout>
+
+Notice the wire label on the cable of both ends. The cable is directional.  The side labeled `DIN` is the `IN` port. **The cable from the Manta M8P should go in the DIN side**.
+
+<Callout type="warning">
+**Be careful here**. Connecting the cable from the Manta to the wrong pin on the Disco LEDs, or mixing up the GND and 5V lines can permanently damage the LEDs.
+</Callout>
+
+![image-20240117124617354](https://img.mpx.wiki/i/2024/01/17/65a75bce2faee.webp)
+
+The wiring to the Disco LEDs depends on if you have a Manta V1 or V2.  Again, the kits have been shipping with V2 since late fall of 20223.
+
+### Disco wiring for Manta M8P V1
+
+This image shows the wire routing for an M8P V1 on a V2.4 printer.  The routing is similar for a Trident.  The Manta M8P V1 has *two* separate ports for controlling each LED stick, so the wiring of the two is separate.
+
+![image-20230401024314626](https://img.mpx.wiki/i/2023/12/30/658f112aa580b.webp)
+
+![image-20230401024548455](https://img.mpx.wiki/i/2023/12/30/658f1138e0844.webp)
+
+### Disco Wiring for Manta M8P V2
+
+If you have the M8P V2.0, you need to connect the Disco in a daisy chain configuration, as M8P V2 only has one RGB port. The long cable from the M8P connects to the `DIN side` of the first stick. Then another cable connects the `DOUT` of the first stick to the `DIN` of the second stick.
+
+<Callout type="warning">
+Again, getting this wiring wrong can permanently damage the LEDs.
+</Callout>
+
+![image-20231025211848032](https://img.mpx.wiki/i/2023/12/30/658f11327db8d.webp)
+
+### Wiring covers
+
+Use extrusion covers to hide the wires to the Disco sticks. They can also be used to hide the gantry stepper wires.
+
+![image-20230401030458219](https://img.mpx.wiki/i/2023/12/30/658f11368e49d.webp)
