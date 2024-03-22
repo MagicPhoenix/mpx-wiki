@@ -10,7 +10,7 @@ Getting a basic understanding of how sensorless homing works now will be useful 
 - The signal from the stepper drivers gets to the Manta CPU via connection of something called the DIAG jumpers. This means three things in practice:
     - **First**: The physical endstops *must* not be installed / connnected or they will interfere with the operation of sensorless homing.  **The DIAG jumper connection takes the place of the physical endstop connection**.
     - **Second**: The EBB SB2209 is no longer involved with homing at all. We will not install the X-endstop to the toolhead and we will completely remove the reference to this endstop in our `printer.cfg`
-    - **Third**: The wiring from the MPX Y-endstop / chamber thermistor will need to be re-pinned so we can retain the chamber temperature function.
+    - **Third**: The wiring from the MPX Y-endstop / chamber thermistor will need to be modified so we can retain the chamber temperature function.
 
 ## DIAG Jumper Installation
 
@@ -29,15 +29,19 @@ The X-endstop on the Stealthburner can be removed / not installed. It *probably*
 
 ### Y Endstop
 
-What MPX calls the Y Endstop PCB *also* includes a very small thermistor that is used for measuring the chamber temperature. We want to retain this capability so we still want to install that PCB and we still need to run the wiring to it.  However,a bit of cable re-pinning will be required to get everything to work. Refer to the picture below. The green lines illustrate the original MPX wiring. The blue lines indicate where we want to end up after re-pinning.
+What MPX calls the Y Endstop PCB *also* includes a very small thermistor that is used for measuring the chamber temperature. We want to retain this capability so we still want to install that PCB and we still need to run the wiring to it **but** we need to change the wiring around a bit from the default: we want to retain a ground connection to the PCB but have the endstop switch ignored. There are two equally-effective methods for this, and the choice is up to you.
+
+#### Method 1: Cable Re-pinning
+
+This method re-pins the the chamber thermistor JST connector for the ground connection needed by the Y Endstop PCB.  Refer to the picture below. The green lines illustrate the original MPX wiring. The blue lines indicate where we want to end up after re-pinning.
 
 ![Connection Changes](https://img.mpx.wiki/i/2024/01/25/65b17599bfeca.webp)
 
 On both the three pin connectors, ground is the middle pin. The "Y Endstop PCB" has both a thermistor (across pins 2 & 3) and a switch (across pins 1 & 2). Re-pin the middle wire (“4”) from the "Y-Endstop" connector to “2” on the "Chamber Thermistor" connector. This relocates the Ground to the thermistor connection so that the M8P can read it. The wiring should now match the blue lines. The "Chamber Thermistor" will plug in to its original spot on the Manta. The "Y Endstop" connector can be left disconnected and tucked away in the PVC wiring channel in case you want to revert back to physical endstops later.
 
-<Callout type="info">
-It might also work to leave the pinouts as-is and just plug the 3-pin "Y Endstop" connector into another unused endstop connector on the Manta board. That would be another way to provide a Ground to the Y Endstop PCB, but this is untested.
-</Callout>
+#### Method 2: Unused Endstop Connection
+
+Method 2 is simple: leave the connector pinouts as-is and plug the 3-pin "Y Endstop" connector into another unused endstop connector on the Manta board. That retains the ground connection to the Y Endstop PCB without otherwise interrupting motor operation.
 
 ## Initial Software Configuration
 ### Changes to printer.cfg

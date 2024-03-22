@@ -28,7 +28,7 @@ The plenum assembly album is very informative but it **does not** show some of t
 
 ## PEI / Buildplate / Heater
 
-The bed heater is pre-installed on the build plate, but you need to install the magnetic sheet yourself. The PEI and magnetic plate included in our kits are slightly larger than the buildplate size on purpose, so that you don't have to align them precisely when placing the spring steel. After sticking them on, you can use a blade to trim off the excess part.
+The bed heater is pre-installed on the build plate but you need to install the magnetic sheet yourself. The PEI and magnetic plate included in our kits are slightly larger than the buildplate size on purpose, so that you don't have to align them precisely when placing the spring steel. After sticking them on, you can use a blade to trim off the excess part.
 
 This [Nero3D video on YouTube](https://www.youtube.com/watch?v=X2S7mkyyC4E) shows how the magnetic plate can be applied. However, it is even easier if you take this advice in one of the comments:
 
@@ -37,6 +37,14 @@ This [Nero3D video on YouTube](https://www.youtube.com/watch?v=X2S7mkyyC4E) show
 <Callout type="info">
 You will need to cut holes in the magnetic sheet either before or after its application so you can fasten it to the bed frame later.
 </Callout>
+
+The MPX build plate includes a second thermistor for monitoring its temperature within Mainsail, and the MPX default `printer.cfg` files are preconfigured to read it. The thermistor attaches at the location shown below towards the back of the build plate. You can use a small amount of heatsink grease or thermal paste on its threads to improve its response time, but do note that its reading will still lag that of the standard heater thermistor by 5-10°C during warmup. **Be careful not to over-tighten the thermistor** or you will strip its threads.
+
+The two thermistors are cabled as follows:
+- the MPX cable labeled HE (HEater) connects to the pre-installed thermistor
+- the MPX cable labeled BP (Build Plate) connects to the second thermistor you install yourself
+
+![image-65ef2f05d89b5](https://img.mpx.wiki/i/2024/03/12/65ef2f05d89b5.webp)
 
 ## Stealthburner
 ### Main Body
