@@ -1,5 +1,6 @@
 {
   "index": "Introduction",
+  
   "-- Voron Kits": {
     "type": "separator",
     "title": "VORON Kits"
@@ -7,11 +8,6 @@
   "GENERAL-KIT": "General Kit Info",
   "VORON-2.4-CBT-KIT": "V2.4 CBT Specific",
   "VORON-TRIDENT-CBT-KIT": "Trident CBT Specific",
-  "-- Mods": {
-    "type": "separator",
-    "title": "Mods"
-  },
-  "VORON-AWD-2WD-MOD": "VORON AWD/2WD Mod",
 
   "-- General": {
     "type": "separator",
@@ -23,7 +19,14 @@
   "Tuning": "Initial Startup & Tuning",
   "Troubleshooting": "Troubleshooting",
   "Maintenance": "Maintenance",
-
+  
+  "-- Mods": {
+    "type": "separator",
+    "title": "Mods"
+  },
+  "VORON-AWD-2WD-MOD": "VORON AWD/2WD Mod",
+  "Sound": "Adding Sound",
+  
   "-- Archive": {
     "type": "separator",
     "title": "Archive"
