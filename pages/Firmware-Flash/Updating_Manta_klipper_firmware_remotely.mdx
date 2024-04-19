@@ -47,16 +47,16 @@ $ make menuconfig
   [*] Enable extra low-level configuration options
       Micro-controller Architecture (STMicroelectronics STM32)  --->
       Processor model (STM32H723)  --->
-      Bootloader offset (128KiB bootloader (SKR SE BX v2.0))  --->
+      Bootloader offset (128KiB bootloader  --->
       Clock Reference (25 MHz crystal)  --->
       Communication interface (USB to CAN bus bridge (USB on PA11/PA12))  --->
       CAN bus interface (CAN bus (on PD0/PD1))  --->
       USB ids  --->
   (1000000) CAN bus speed
-  ()  GPIO pins to set at micro-controller startup (NEW)
+  ()  GPIO pins to set at micro-controller startup
   ```
 
-  ![image-20231012021820745](https://img.mpx.wiki/i/2023/10/12/6526e6ee74e55.webp)
+  ![KlipperMantaConfig2.webp](https://img.mpx.wiki/i/2024/04/15/661c5bae827cb.webp)
 </details>
 
 Press Q to save and then run `make` from the terminal:
@@ -95,5 +95,5 @@ $ make flash FLASH_DEVICE=0483:df11
 Restart your printer
 
 <Callout type="info">
-In the event the Klipper flash fails and the Manta becomes unresponive, it can be recovered by reflashing the bootloader and then klipper, see the troubleshooting section of the initial flashing guide. The USB_5v jumper on the Manta is not needed if the board is powered from the printer.
+In the event the Klipper flash fails and the Manta becomes unresponive, it can be recovered by reflashing the bootloader and then Klipper - see the troubleshooting section of the initial flashing guide. The USB_5v jumper on the Manta is not needed if the board is powered from the printer.
 </Callout>
