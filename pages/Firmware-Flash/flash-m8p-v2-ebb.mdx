@@ -27,10 +27,10 @@ If you have never done anything like this before, relax. Short of letting the ma
 You need to provide a USB Type-C cable to plug into the Manta that can provide 5V output. We recommend USB-Type A to Type C cables.
 
 <Callout type="warning">
-Some Power Delivery chargers may output over 5V via USB-C to USB-C type cables that could burn out your M8P.
+Some Power Delivery chargers may output more than 5V via USB-C to USB-C type cables that in turn could burn out your M8P. Some also won't negotiate enough power to run the M8P at all. See the ([Troubleshooting](#troubleshooting)) section for more details.
 </Callout>
 
-We also strongly recommend you use a USB Wall Charger: some PC USB ports don't have enough power to run the Manta plus the EBB, causing random issues. 
+In addition, some PC USB ports don't have enough power to run the Manta plus the EBB, causing random issues. USB 3.0 ports should be OK but older USB 2.0 ports might be problematic as they are limited to 500 mA of current.
 
 ### Wiring
 
@@ -44,11 +44,21 @@ We strongly recommend flashing the M8P and the EBB before installing them into t
 Do not connect the red and black wires on the Canbus cable or this will short out 5V to ground and let the magic smoke out. Do not leave them dangling as shown in the picture above. It is better to insulate the end of the red and black wires by tape or some other means to prevent accidental contact between the two wires, or between the wires and the Manta.
 </Callout>
 
+Connect the green and yellow Canbus data wires to the Manta. This picture shows the header on the Manta V2 where the connection is made.
+
 ![image-20231012021503707](https://img.mpx.wiki/i/2023/10/12/6526e6354a242.webp)
 
-Connect the following jumpers and leave them connected until the checks at the end of this process are completed. Note that there are two different sizes of jumpers, so make sure you use the right size for each connection.
-- V_USB and 120R on M8P
-- USB_5V and 120R on EBB SB
+Next we need to install some jumpers on the Manta and EBB so the two boards can be flashed. Note that there are **three** different sizes of jumpers so make sure you use the right size for each connection. The two largest sizes are packaged with the Manta for use on that board. The smallest size (circled in red below) are packaged with the EBB and used exclusively with it. The EBB jumpers can be hard to find: look for them mixed in with some connectors and pins for that board.
+
+<Callout type="warning">
+The jumpers should be the same width as the headers they plug in to and should fit snugly. Using the wrong-sized jumper has been the source of numerous problems because of the intermittent connection that results.
+</Callout>
+
+![Jumpers.webp](https://img.mpx.wiki/i/2024/05/05/663665411771e.webp)
+
+Connect the following jumpers and leave them connected until the checks at the end of this process are completed.
+- V_USB (largest-sized jumper) and 120R (medium-sized jumper) on M8P
+- USB_5V and 120R on EBB SB (smallest-sized jumper)
 
 ![image-20231012021714644](https://img.mpx.wiki/i/2023/10/12/6526e6b01034f.webp)
 
@@ -500,9 +510,18 @@ Finally, remove the `v_usb` jumper on the M8P and `usb_5v` jumper on the EBB SB.
 
 ## Troubleshooting 
 
+**Problem**: The Manta and the CB1 aren't powering up even though they are connected to a supply that should have lots of power.
+- Did you install the V_USB jumper on the Manta?
+- Are you using a USB-C power supply for a phone? Some USB-C power supplies will try to negotiate with the device they are connected to and this doesn't always work well for the Manta. Anker USB-C power supplies for phones are [known to be problematic](https://discord.com/channels/707214359582998650/887356023873089607/1235782465164017694).
+
 **Problem**: I can't see the EBB Toolhead using `lsusb` after flashing the Manta but its Power LED is on.
+- Verify that you are connecting the EBB via one of the two USB-A connections on the Manta V2. The USB-C port on the Manta isn't supported for flashing the EBB.
 - Verify that you are using a USB data cable and not a charging cable
-- Make sure the USB-C cable is plugged *firmly* into the EBB. It will click into place when properly connected.
+- Try a different cable. More than one person has had problems because of a bad cable.
+- Make sure the USB-C cable is plugged *firmly* into the EBB. It will click into place when properly connected. If only pushed in halfway, it will provide power but won't provide data.
+
+**Problem**: I can't see the EBB Toolhead using `lsusb` after flashing the Manta and its Power LED is off.
+- Verify that you connected the USB_5V jumper on the EBB with the smallest sized jumper packaged with the EBB
 
 **Problem**: I flashed the Manta board and I see an entry for it with `lsusb` after doing so, but it disappears from `lsusb` after I reboot or cycle power.
 - The Manta bootloader has probably been corrupted, possibly by flashing the EBB Canboot image to the Manta instead of the EBB by mistake. Follow [these instructions on the BTT Github](https://github.com/bigtreetech/Manta-M8P/tree/master/V2.0/Firmware) to restore the bootloader on the Manta.
