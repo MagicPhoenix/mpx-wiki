@@ -120,7 +120,7 @@ We use a ```$``` symbol to show most of the single line commands you need to typ
 
 Use ```ssh``` to access the CB1 from your PC:
 
-```
+```shell
 $ ssh biqu@192.168.2.10
 biqu@192.168.2.10's password:biqu  (<-- Password will not be echoed to screen)
 ```
@@ -138,7 +138,12 @@ Next we need to make sure that the CB1 uses the proper Canbus data rate. This in
 $ sudo nano /etc/network/interfaces.d/can0
 ```
 
-Enter the password ```biqu``` if prompted. Change the bitrate value to 1000000 if necessary and any other values as required. The file should look *exactly* like this when you are done:
+Enter the password ```biqu``` if prompted. Depending on which BTT image you are using, you might need to create this file from scratch *or* edit an existing file provided by BTT.  If the latter, change the bitrate value to 1000000 if necessary and any other values as required. Whether you ending up having to create this file or edit an existing file, it should look *exactly* like this when you are done. 
+
+
+<Callout type="warning">
+A single typo here can lead to tricky problems later.
+</Callout>
 
 ```
 allow-hotplug can0
@@ -459,7 +464,7 @@ $ python3 lib/canboot/flash_can.py -q
 
 If it shows like this, then Canboot has flashed successfully.
 
-```
+```shell
 biqu@BTT-CB1:~/klipper$ python3 lib/canboot/flash_can.py -q
 Resetting all bootloader node IDs...
 Checking for canboot nodes...
@@ -523,8 +528,25 @@ Finally, remove the `v_usb` jumper on the M8P and `usb_5v` jumper on the EBB SB.
 **Problem**: I can't see the EBB Toolhead using `lsusb` after flashing the Manta and its Power LED is off.
 - Verify that you connected the USB_5V jumper on the EBB with the smallest sized jumper packaged with the EBB
 
-**Problem**: I flashed the Manta board and I see an entry for it with `lsusb` after doing so, but it disappears from `lsusb` after I reboot or cycle power.
+**Problem**: I flashed the Manta board and I see an Openmoko entry for it with `lsusb` after doing so, but it disappears from `lsusb` after I reset the Manta or cycle power.
 - The Manta bootloader has probably been corrupted, possibly by flashing the EBB Canboot image to the Manta instead of the EBB by mistake. Follow [these instructions on the BTT Github](https://github.com/bigtreetech/Manta-M8P/tree/master/V2.0/Firmware) to restore the bootloader on the Manta.
+
+**Problem**: I flashed the Manta board and I see an OpenMoko entry for it with `lsusb` even after I reset the Manta or cycle power. I double checked my `make menuconfig` setup and that looks good too. But I get errors like this when I try to get the Manta UUID with `flash_can.py`.
+
+```shell
+biqu@BTT-CB1:~/klipper$ python3 lib/canboot/flash_can.py -q
+Resetting all bootloader node IDs...
+Checking for canboot nodes...
+ERROR:root:Can Flash Error
+Traceback (most recent call last):
+  File "/home/biqu/klipper/lib/canboot/flash_can.py", line 596, in main
+    loop.run_until_complete(sock.run_query(intf))
+<snip>
+  File "/usr/lib/python3.9/asyncio/streams.py", line 721, in readexactly
+    raise exceptions.IncompleteReadError(incomplete, n)
+asyncio.exceptions.IncompleteReadError: 0 bytes read on a total of 8 expected bytes
+```
+- Double check your `/etc/network/interfaces.d/can0` file for typos. It needs to look *exactly* like that shown in the section on [Setting the CB1 Can Bridge Bitrate](#set-cb1-can-bridge-bitrate)
 
 **Problem**: I am trying to flash the Manta / EBB but the system is not stable. The Canbus connection disconnects and reconnects, interfaces disappear and reappear, etc.
 - You might have a weak USB power supply. We have seen instances where a marginal supply will cause the Manta to drop in and out while the CB1 operates normally. Or the CB1 and Manta might operate OK but the setup becomes unstable when the SB2209 is connected. Switch to a power supply / USB port that can provide more current and see if the problem goes away.
