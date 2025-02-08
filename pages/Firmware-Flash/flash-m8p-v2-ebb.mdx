@@ -184,10 +184,32 @@ $ sudo systemctl disable KlipperScreen
 
 Reboot the CB1 from the command line for these changes and those in the previous section to take effect:
 ```
-$ reboot
+biqu@Voron:~$ reboot
 ```
 
-## Flash M8P 
+### Canbus Interface Check
+
+Before moving on, let's verify that the Canbus interface is set up properly after the reboot of the CB1 in the previous step. `ssh` back into the printer and enter the following:
+
+``` shell
+$ ip -details link show can0
+```
+
+Your command and the resulting output should look something like this. Verify the `qlen` value of `1024` and the `bitrate` value of `1000000` appears in the output. If they don't, you most likely have a typo in your `/etc/network/interfaces.d/can0` file. Edit the file as necessary, reboot the CB1, and run this check until the `qlen` & `bitrate` values are correct.
+
+
+``` shell
+biqu@Voron:~$ ip -details link show can0
+3: can0: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1024
+    link/can  promiscuity 0 minmtu 0 maxmtu 0 
+    can state ERROR-ACTIVE restart-ms 0 
+          bitrate 1000000 sample-point 0.750 
+          tq 62 prop-seg 5 phase-seg1 6 phase-seg2 4 sjw 1
+          gs_usb: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..1024 brp-inc 1
+          clock 48000000 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535
+```
+
+## Flash M8P
 
 <Callout type="info">
 If you run into a problem flashing the M8P in this section or the EBB in the next sections, check out the [Troubleshooting section](#troubleshooting) at the bottom of this page for ideas.
@@ -451,6 +473,10 @@ Note how the address is 0x08002000 here vs the 0x08000000 when canboot was flash
 
 <Callout type="info">
 The python-based checks don't always work right, and some people have more luck than others getting them to work. Powering everything down and back up might increase your chances of getting them working. Generally speaking, if the flash commands complete successfully and the output looked as expected, it *should* be OK.
+</Callout>
+
+<Callout type="warning">
+The Manta and the EBB were flashed over USB in the previous steps, but these checks in the next steps are done via Canbus. You **must** have your Canbus cable connected as shown in the [Wiring](#wiring) section of this guide for these checks to work
 </Callout>
 
 1. Canboot Check 
