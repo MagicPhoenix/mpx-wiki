@@ -22,9 +22,37 @@ We strongly recommend you install the Flat Flexible cable for the display on the
 
 ![image-20230909143109123](https://img.mpx.wiki/i/2023/09/09/64fc1130d78ba.webp)
 
-Uncomment this line from BoardEnv.txt. This file is in CB1 TF card /boot.
 
-![image-20230731155412439](https://img.mpx.wiki/i/2023/08/08/64d25f6de2d5b.webp)
+
+
+
+<details>
+    <summary>CB1 OS 3.0</summary>
+
+		Uncomment `overlays=tft35_spi` and `param_tft35_spi_rotate=0`
+	
+		![image-20250208121835524](https://img.mpx.wiki/i/2025/02/08/67a6db24b765d.webp)
+	
+		Change `HDMI-1` to `TFT35`, and uncomment `ks_src` line. 
+
+![image-20250208122001454](https://img.mpx.wiki/i/2025/02/08/67a6db736cbeb.webp)
+
+
+
+</details>
+
+
+
+<details>
+    <summary>CB1 OS 2.x</summary>
+
+		Uncomment this line from BoardEnv.txt. This file is in CB1 TF card /boot.
+	
+		![image-20230731155412439](https://img.mpx.wiki/i/2023/08/08/64d25f6de2d5b.webp)
+</details>
+
+
+
 
 ##  Layout
 
